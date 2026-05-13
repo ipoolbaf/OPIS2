@@ -37,7 +37,67 @@
         .meme-sub { font-size: 0.85rem; opacity: 0.8; margin-top: 8px; }
         .carousel-btn { background: #1e6f3f; border: none; color: white; padding: 8px 16px; border-radius: 40px; margin: 12px 5px; cursor: pointer; transition: 0.2s; }
         .carousel-btn:hover { background: #2a8a55; transform: scale(1.05); }
-        
+.anime-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.anime-girl {
+    position: absolute;
+    opacity: 0.15;
+    transition: all 0.5s ease;
+    filter: drop-shadow(0 0 10px rgba(255,105,180,0.3));
+    animation: float 8s ease-in-out infinite;
+    font-size: 5rem;
+}
+
+.anime-girl:nth-child(1) {
+    bottom: 5%;
+    left: -30px;
+    animation-delay: 0s;
+}
+.anime-girl:nth-child(2) {
+    top: 10%;
+    right: -30px;
+    animation-delay: 2s;
+    animation-duration: 10s;
+}
+.anime-girl:nth-child(3) {
+    bottom: 20%;
+    right: 10%;
+    animation-delay: 4s;
+    animation-duration: 7s;
+}
+.anime-girl:nth-child(4) {
+    top: 40%;
+    left: 5%;
+    animation-delay: 6s;
+    animation-duration: 9s;
+}
+.anime-girl:nth-child(5) {
+    bottom: 30%;
+    left: 15%;
+    animation-delay: 1s;
+    animation-duration: 11s;
+}
+.anime-girl:nth-child(6) {
+    top: 60%;
+    right: 15%;
+    animation-delay: 3s;
+    animation-duration: 12s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(3deg); }
+}        
+
         .game-box { background: #1a2a32; border-radius: 28px; padding: 20px; text-align: center; color: white; margin-top: 20px; transition: 0.3s; }
         .game-box:hover { transform: scale(1.01); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
         canvas { background: #0f1a1f; border-radius: 20px; }
@@ -83,6 +143,13 @@
     </style>
 </head>
 <body>
+<div class="anime-bg">
+        <div class="anime-girl">🌸👩‍💻💻</div>
+        <div class="anime-girl">🎀🐍✨</div>
+        <div class="anime-girl">💻🌸🎧</div>
+        <div class="anime-girl">⚡👧🐍</div>
+        <div class="anime-girl">🍡💻🎀</div>
+    </div>
 <div class="container">
     <div class="hero">
         <h1>🐍 Django: Полный курс</h1>
@@ -94,6 +161,27 @@
         <div class="nav-btn" data-nav="test">📝 Тест</div>
     </div>
     <div id="app"></div>
+ <div style="background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); border-radius: 32px; padding: 25px 30px; margin: 40px 0 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); border: 1px solid rgba(255,215,0,0.3);">
+        <div style="flex: 2; min-width: 200px;">
+            <div style="background: linear-gradient(90deg, #FFD700, #FF8C00); display: inline-block; padding: 4px 15px; border-radius: 40px; font-size: 0.7rem; font-weight: bold; color: #000;">🌟 ВАЙБОВЫЙ ПРОДЖЕКТ 🌟</div>
+            <h3 style="color: #FFD700; margin: 15px 0 10px; font-size: 1.6rem;">🧘‍♂️ Виктор "Восхитительный человек с изюминкой" Закупнев</h3>
+            <p style="color: #ddd; margin-bottom: 12px; font-size: 1rem;">🔥 <strong>Лучший в мире Вайбкодер</strong> — учит Django, Python и дзену программирования. Никакой скуки, только вайб, мемы и реальный опыт.</p>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 15px;">
+                <span style="background: rgba(255,215,0,0.2); padding: 4px 12px; border-radius: 30px; font-size: 0.75rem; color: #FFD700;">🎸 Django-гуру</span>
+                <span style="background: rgba(255,215,0,0.2); padding: 4px 12px; border-radius: 30px; font-size: 0.75rem; color: #FFD700;">🧠 Ментор с изюминкой</span>
+                <span style="background: rgba(255,215,0,0.2); padding: 4px 12px; border-radius: 30px; font-size: 0.75rem; color: #FFD700;">⚡ VaibCoding основатель</span>
+            </div>
+            <a href="https://vk.com/withoutbrainman" target="_blank" style="background: linear-gradient(90deg, #FFD700, #FF8C00); color: #000; text-decoration: none; font-weight: bold; padding: 10px 28px; border-radius: 60px; display: inline-block; transition: 0.3s; font-size: 0.95rem;">🚀 Подписаться в VK →</a>
+            <p style="color: #aaa; font-size: 0.7rem; margin-top: 12px;">⭐ 5000+ учеников | Вайбкодинг — это стиль жизни</p>
+        </div>
+        <div style="flex: 1; text-align: center;">
+            <div style="font-size: 5rem; filter: drop-shadow(0 8px 15px rgba(0,0,0,0.3));">🧘‍♂️✨</div>
+            <div style="background: rgba(255,215,0,0.15); border-radius: 20px; padding: 10px; margin-top: 8px;">
+                <div style="font-size: 0.8rem; color: #FFD700;">"Изюминка есть у каждого,<br>просто не все её нашли"</div>
+                <div style="font-size: 0.7rem; color: #aaa; margin-top: 5px;">— Виктор Закупнев</div>
+            </div>
+        </div>
+    </div>
     <footer>⭐ Отличный курс для погружения в web-разработку от многоуважаемого Виктора "HalleriQ" Закупнева</footer>
 </div>
 
@@ -457,8 +545,8 @@ function resetSnake(){ if(gameLoop) clearInterval(gameLoop); initSnake(); }
 // ========== НАВИГАЦИЯ ==========
 function getPrevNext(type,id){ const items=type==='lec'?lectures.map(l=>({type:'lec',id:l.id,title:l.title})):practices.map(p=>({type:'prac',id:p.id,title:p.title})); const idx=items.findIndex(i=>i.id===id); return {prev:idx>0?items[idx-1]:null, next:idx<items.length-1?items[idx+1]:null}; }
 function renderNavButtons(type,id){ const {prev,next}=getPrevNext(type,id); return `<div class="nav-buttons">${prev?`<div class="nav-btn-page" data-nav="${prev.type}" data-id="${prev.id}">← Предыдущая: ${prev.title}</div>`:'<div class="nav-btn-page" style="opacity:0.3;">← Предыдущая</div>'}<div class="nav-btn-page" data-nav="home">🏠 На главную</div>${next?`<div class="nav-btn-page" data-nav="${next.type}" data-id="${next.id}">Следующая: ${next.title} →</div>`:'<div class="nav-btn-page" style="opacity:0.3;">Следующая →</div>'}</div>`; }
-function renderLecture(id){ const lec=lectures.find(l=>l.id===id); if(!lec) return '<div class="page"><p>Лекция не найдена</p></div>'; const relatedPrac=practices.find(p=>p.num===lec.num); return `<div class="page"><div class="back" data-nav="home">← ко всем лекциям</div><h1>${escapeHtml(lec.title)}</h1><div class="badge">📘 лекция + тикток-мем</div>${renderMemeCard('lec',id)}${lec.infographic}<div class="content">${lec.content}</div><div class="conclusion">${lec.conclusion}</div>${renderNavButtons('lec',id)}${relatedPrac?`<div style="margin-top:15px;"><div class="nav-btn-page" data-nav="prac" data-id="${relatedPrac.id}">🔗 Перейти к практике: ${relatedPrac.title}</div></div>`:''}</div>`; }
-function renderPractice(id){ const prac=practices.find(p=>p.id===id); if(!prac) return '<div class="page"><p>Практика не найдена</p></div>'; const relatedLec=lectures.find(l=>l.num===prac.num); return `<div class="page"><div class="back" data-nav="home">← ко всем практикам</div><h1>${escapeHtml(prac.title)}</h1><div class="badge">🛠️ практика + тикток-мем</div>${renderMemeCard('prac',id)}<div class="content">${prac.content}</div><div class="conclusion">${prac.conclusion}</div>${renderNavButtons('prac',id)}${relatedLec?`<div style="margin-top:15px;"><div class="nav-btn-page" data-nav="lec" data-id="${relatedLec.id}">🔗 Перейти к лекции: ${relatedLec.title}</div></div>`:''}</div>`; }
+function renderLecture(id){ const lec=lectures.find(l=>l.id===id); if(!lec) return '<div class="page"><p>Лекция не найдена</p></div>'; const relatedPrac=practices.find(p=>p.num===lec.num); return `<div class="page"><div class="back" data-nav="home">← ко всем лекциям</div><h1>${escapeHtml(lec.title)}</h1><div class="badge">📘 лекция</div>${renderMemeCard('lec',id)}${lec.infographic}<div class="content">${lec.content}</div><div class="conclusion">${lec.conclusion}</div>${renderNavButtons('lec',id)}${relatedPrac?`<div style="margin-top:15px;"><div class="nav-btn-page" data-nav="prac" data-id="${relatedPrac.id}">🔗 Перейти к практике: ${relatedPrac.title}</div></div>`:''}</div>`; }
+function renderPractice(id){ const prac=practices.find(p=>p.id===id); if(!prac) return '<div class="page"><p>Практика не найдена</p></div>'; const relatedLec=lectures.find(l=>l.num===prac.num); return `<div class="page"><div class="back" data-nav="home">← ко всем практикам</div><h1>${escapeHtml(prac.title)}</h1><div class="badge">🛠️ практика</div>${renderMemeCard('prac',id)}<div class="content">${prac.content}</div><div class="conclusion">${prac.conclusion}</div>${renderNavButtons('prac',id)}${relatedLec?`<div style="margin-top:15px;"><div class="nav-btn-page" data-nav="lec" data-id="${relatedLec.id}">🔗 Перейти к лекции: ${relatedLec.title}</div></div>`:''}</div>`; }
 function escapeHtml(str){ if(!str) return ''; return str.replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
 function initMemeCarousel() { const slides = document.querySelectorAll('.meme-slide'); if (slides.length === 0) return; const showSlide = (index) => { slides.forEach((slide, i) => { slide.classList.toggle('active', i === index); }); }; const prevBtn = document.getElementById('prevMeme'); const nextBtn = document.getElementById('nextMeme'); if (prevBtn) { prevBtn.onclick = () => { memeIndex = (memeIndex - 1 + tiktokMemes.length) % tiktokMemes.length; showSlide(memeIndex); }; } if (nextBtn) { nextBtn.onclick = () => { memeIndex = (memeIndex + 1) % tiktokMemes.length; showSlide(memeIndex); }; } }
 let activeTab="home";
