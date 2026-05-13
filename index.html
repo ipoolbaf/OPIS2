@@ -37,7 +37,7 @@
         .meme-sub { font-size: 0.85rem; opacity: 0.8; margin-top: 8px; }
         .carousel-btn { background: #1e6f3f; border: none; color: white; padding: 8px 16px; border-radius: 40px; margin: 12px 5px; cursor: pointer; transition: 0.2s; }
         .carousel-btn:hover { background: #2a8a55; transform: scale(1.05); }
-/* АНИМЕ-ДЕВОЧКИ ТОЛЬКО ПО БОКАМ */
+/* АНИМЕ-ДЕВОЧКИ ТОЛЬКО ПО БОКАМ — ПОД КОНТЕНТОМ */
 .anime-bg {
     position: fixed;
     top: 0;
@@ -45,7 +45,7 @@
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 0;
+    z-index: 1;  /* МЕНЬШЕ, ЧЕМ У КОНТЕЙНЕРА */
     overflow: visible;
 }
 
@@ -58,7 +58,7 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
-    z-index: 0;
+    z-index: 1;  /* МЕНЬШЕ, ЧЕМ У КОНТЕЙНЕРА */
     pointer-events: none;
 }
 
@@ -71,20 +71,20 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
-    z-index: 0;
+    z-index: 1;  /* МЕНЬШЕ, ЧЕМ У КОНТЕЙНЕРА */
     pointer-events: none;
 }
 
 .anime-girl {
     font-size: 4rem;
-    opacity: 0.25;
+    opacity: 0.2;  /* Ещё немного прозрачнее, чтобы не мешали */
     filter: drop-shadow(0 0 8px rgba(255,105,180,0.3));
     animation: float 6s ease-in-out infinite;
     transition: opacity 0.3s;
 }
 
 .anime-girl:hover {
-    opacity: 0.5;
+    opacity: 0.35;
 }
 
 /* Разные анимации для каждой */
@@ -102,20 +102,25 @@
     50% { transform: translateY(-15px) rotate(5deg); }
 }
 
-/* На мобильных и узких экранах скрываем аниме (чтобы не мешали) */
+/* ГЛАВНОЕ: контейнер с контентом должен быть выше аниме */
+.container, .hero, .block, .page, .test-page, .nav-links, footer {
+    position: relative;
+    z-index: 10;  /* ВЫШЕ, ЧЕМ У АНИМЕ */
+}
+
+/* На мобильных и узких экранах скрываем аниме */
 @media (max-width: 1200px) {
     .anime-left, .anime-right {
         display: none;
     }
 }
 
-/* Для очень широких экранов можно чуть сдвинуть */
+/* Для очень широких экранов */
 @media (min-width: 1800px) {
     .anime-left { left: 30px; }
     .anime-right { right: 30px; }
-    .anime-girl { font-size: 5rem; opacity: 0.3; }
-}    
-
+    .anime-girl { font-size: 5rem; opacity: 0.25; }
+}
         .game-box { background: #1a2a32; border-radius: 28px; padding: 20px; text-align: center; color: white; margin-top: 20px; transition: 0.3s; }
         .game-box:hover { transform: scale(1.01); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
         canvas { background: #0f1a1f; border-radius: 20px; }
