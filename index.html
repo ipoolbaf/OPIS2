@@ -248,7 +248,22 @@ function renderHome() {
     const lecItems = lectures.map(l => `<li><a href="#" data-nav="lec" data-id="${l.id}">📘 ${escapeHtml(l.title)}</a></li>`).join('');
     const pracItems = practices.map(p => `<li><a href="#" data-nav="prac" data-id="${p.id}">🛠️ ${escapeHtml(p.title)}</a></li>`).join('');
     
-    const memesHtml = tiktokMemes.map((m, i) => `<div class="meme-slide ${i === 0 ? 'active' : ''}"><div style="font-size: 4rem;">${m.emoji}</div><div class="meme-text">${escapeHtml(m.text)}</div><div class="meme-sub">${escapeHtml(m.hashtag)}<br>${escapeHtml(m.sub)}</div></div>`).join('');
+    // Мемы для карусели на главной
+    const carouselMemes = [
+        { emoji: "🔥", text: "POV: Ты написал первый Django-проект и он запустился", hashtag: "#django #firstproject #dev", sub: "runserver 8000 — магия" },
+        { emoji: "🤯", text: "POV: Ты узнал, что Django назван в честь джазового гитариста", hashtag: "#djangoreinhardt #funfact", sub: "А ты думал, при чём тут Python?" },
+        { emoji: "😭", text: "POV: Ты забыл добавить select_related и получил N+1 запрос", hashtag: "#sql #optimization", sub: "100 постов = 101 запрос. Классика!" },
+        { emoji: "👑", text: "POV: Ты зашёл в админку Django в первый раз", hashtag: "#djangoadmin #crud", sub: "Где моя кнопка 'сделать красиво'?" },
+        { emoji: "🐍", text: "POV: Ты объясняешь менеджеру, почему не можешь сделать сайт за 2 часа", hashtag: "#python #django", sub: "Батарейки в комплекте, но не волшебная палочка" }
+    ];
+    
+    const memesHtml = carouselMemes.map((m, i) => `
+        <div class="meme-slide ${i === 0 ? 'active' : ''}">
+            <div style="font-size: 4rem;">${m.emoji}</div>
+            <div class="meme-text">${escapeHtml(m.text)}</div>
+            <div class="meme-sub">${escapeHtml(m.hashtag)}<br>${escapeHtml(m.sub)}</div>
+        </div>
+    `).join('');
     
     return `<div class="dashboard">
         <div class="block">
@@ -259,7 +274,7 @@ function renderHome() {
         </div>
         <div>
             <div class="meme-section">
-                <h3>🎬 Мемы про Django</h3>
+                <h3>🎬 ТикТок-мемы про Django</h3>
                 <div class="meme-carousel" id="memeCarousel">
                     ${memesHtml}
                 </div>
@@ -279,7 +294,30 @@ function renderHome() {
         </div>
     </div>`;
 }
-
+function initMemeCarousel() {
+    const slides = document.querySelectorAll('.meme-slide');
+    if (slides.length === 0) return;
+    let currentIndex = 0;
+    const showSlide = (index) => {
+        slides.forEach((slide, i) => {
+            slide.classList.toggle('active', i === index);
+        });
+    };
+    const prevBtn = document.getElementById('prevMeme');
+    const nextBtn = document.getElementById('nextMeme');
+    if (prevBtn) {
+        prevBtn.onclick = () => {
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            showSlide(currentIndex);
+        };
+    }
+    if (nextBtn) {
+        nextBtn.onclick = () => {
+            currentIndex = (currentIndex + 1) % slides.length;
+            showSlide(currentIndex);
+        };
+    }
+}
 function renderMemeCard(type, id) {
     let meme;
     if (type === 'lec') meme = lectureMemes[id];
@@ -294,10 +332,10 @@ function renderMemeCard(type, id) {
     </div>`;
 }
 
+
 // ===================== ЛЕКЦИЯ 1 (ПОЛНЫЙ ТЕКСТ ИЗ PDF) =====================
 const lectures = [
 {id:"lec1", num:1, title:"Лекция 1: Введение в архитектуру веб-приложений. Место Django в экосистеме Python",
-infographic:`<div class="infographic"><h3>📊 Клиент-серверная архитектура</h3><div class="flow-chart"><span class="flow-step">Клиент</span><span class="flow-arrow">→</span><span class="flow-step">HTTP запрос</span><span class="flow-arrow">→</span><span class="flow-step">Django</span><span class="flow-arrow">→</span><span class="flow-step">HTTP ответ</span><span class="flow-arrow">→</span><span class="flow-step">Клиент</span></div><div class="infographic-grid"><div class="info-card"><div class="icon">📡</div><div class="label">GET</div><div class="desc">Параметры в URL</div></div><div class="info-card"><div class="icon">📤</div><div class="label">POST</div><div class="desc">Тело запроса</div></div><div class="info-card"><div class="icon">✅</div><div class="label">200 OK</div><div class="desc">Успех</div></div><div class="info-card"><div class="icon">🔴</div><div class="label">404/500</div><div class="desc">Ошибка</div></div></div></div>`,
 content:`<h2>Лекция 1: Введение в архитектуру веб-приложений. Место Django в экосистеме Python</h2>
 <p>Цель лекции: сформировать понимание клиент-серверной модели, HTTP-протокола, роли веб-фреймворков. Познакомить с философией Django и принципами организации рабочего окружения.</p>
 <h3>1.1. Клиент-серверная архитектура как основа веба</h3>
@@ -332,6 +370,7 @@ content:`<h2>Лекция 1: Введение в архитектуру веб-�
 <p>Встроенный сервер разработки, запускаемый через manage.py runserver, предназначен только для локального тестирования. Он не соответствует требованиям безопасности и производительности для эксплуатации в реальных условиях.</p>
 <h3>1.5. Управление зависимостями</h3>
 <p>Для воспроизводимости окружения принято фиксировать все установленные пакеты и их версии в специальном файле (обычно requirements.txt). Этот файл позволяет другому разработчику или серверу в точности восстановить то же окружение, в котором разрабатывался проект. Данная практика является обязательной для командной разработки и развёртывания приложений.</p>`,
+infographic:`<div class="infographic"><h3>📊 Клиент-серверная архитектура</h3><div class="flow-chart"><span class="flow-step">Клиент</span><span class="flow-arrow">→</span><span class="flow-step">HTTP запрос</span><span class="flow-arrow">→</span><span class="flow-step">Django</span><span class="flow-arrow">→</span><span class="flow-step">HTTP ответ</span><span class="flow-arrow">→</span><span class="flow-step">Клиент</span></div><div class="infographic-grid"><div class="info-card"><div class="icon">📡</div><div class="label">GET</div><div class="desc">Параметры в URL</div></div><div class="info-card"><div class="icon">📤</div><div class="label">POST</div><div class="desc">Тело запроса</div></div><div class="info-card"><div class="icon">✅</div><div class="label">200 OK</div><div class="desc">Успех</div></div><div class="info-card"><div class="icon">🔴</div><div class="label">404/500</div><div class="desc">Ошибка</div></div></div></div>`,
 conclusion:`<h3>📌 Выводы по лекции 1</h3><p>Django — мощный фреймворк с принципом "Batteries included", работающий по модели клиент-сервер. Ключевые элементы: HTTP-методы (GET/POST), коды ответов, виртуальные окружения для изоляции проектов. Базовая структура проекта (manage.py, settings.py, urls.py) — фундамент для дальнейшей работы.</p>`},
 {id:"lec2", num:2, title:"Лекция 2: Организация кода в Django. Модель MVT",
 infographic:`<div class="infographic"><h3>🏛️ Архитектура MVT</h3><div class="flow-chart"><span class="flow-step">Запрос</span><span class="flow-arrow">→</span><span class="flow-step">URLconf</span><span class="flow-arrow">→</span><span class="flow-step">View</span><span class="flow-arrow">↕️</span><span class="flow-step">Model</span><span class="flow-arrow">→</span><span class="flow-step">Template</span><span class="flow-arrow">→</span><span class="flow-step">Ответ</span></div><div class="infographic-grid"><div class="info-card"><div class="icon">🗄️</div><div class="label">Model</div><div class="desc">Данные, БД</div></div><div class="info-card"><div class="icon">👁️</div><div class="label">View</div><div class="desc">Логика</div></div><div class="info-card"><div class="icon">📄</div><div class="label">Template</div><div class="desc">HTML</div></div></div></div>`,
@@ -567,17 +606,53 @@ function gameOver(){ gameRunning=false; clearInterval(gameLoop); ctx.fillStyle='
 function changeDir(e){ if(!gameRunning) return; const k=e.key; if(k==='ArrowRight'&&direction!=='LEFT') direction='RIGHT'; else if(k==='ArrowLeft'&&direction!=='RIGHT') direction='LEFT'; else if(k==='ArrowUp'&&direction!=='DOWN') direction='UP'; else if(k==='ArrowDown'&&direction!=='UP') direction='DOWN'; }
 function resetSnake(){ if(gameLoop) clearInterval(gameLoop); initSnake(); }
 
-// ========== НАВИГАЦИЯ ==========
+// ========== НАВИГАЦИЯ (с мемами) ==========
+function renderHome() { const lecItems=lectures.map(l=>`<li><a href="#" data-nav="lec" data-id="${l.id}">📘 ${escapeHtml(l.title)}</a></li>`).join(''); const pracItems=practices.map(p=>`<li><a href="#" data-nav="prac" data-id="${p.id}">🛠️ ${escapeHtml(p.title)}</a></li>`).join(''); return `<div class="dashboard"><div class="block"><h2>📖 Лекции</h2><ul class="list">${lecItems}</ul><h2>✍️ Практики</h2><ul class="list">${pracItems}</ul></div><div><div class="game-box"><h3>🐍 Змейка</h3><canvas id="snakeCanvas" width="400" height="400"></canvas><div class="score" id="snakeScore">Очки: 0</div><button class="game-btn" id="resetSnakeBtn">🔄 Новая игра</button><p style="font-size:12px;">← ↑ ↓ →</p></div></div></div>`; }
+
 function getPrevNext(type,id){ const items=type==='lec'?lectures.map(l=>({type:'lec',id:l.id,title:l.title})):practices.map(p=>({type:'prac',id:p.id,title:p.title})); const idx=items.findIndex(i=>i.id===id); return {prev:idx>0?items[idx-1]:null, next:idx<items.length-1?items[idx+1]:null}; }
-function renderNavButtons(type,id){ const {prev,next}=getPrevNext(type,id); return `<div class="nav-buttons">${prev?`<div class="nav-btn-page" data-nav="${prev.type}" data-id="${prev.id}">← Предыдущая: ${prev.title}</div>`:'<div class="nav-btn-page" style="opacity:0.3;">← Предыдущая</div>'}<div class="nav-btn-page" data-nav="home">🏠 На главную</div>${next?`<div class="nav-btn-page" data-nav="${next.type}" data-id="${next.id}">Следующая: ${next.title} →</div>`:'<div class="nav-btn-page" style="opacity:0.3;">Следующая →</div>'}</div>`; }
-function renderLecture(id){ const lec=lectures.find(l=>l.id===id); if(!lec) return '<div class="page"><p>Лекция не найдена</p></div>'; const relatedPrac=practices.find(p=>p.num===lec.num); return `<div class="page"><div class="back" data-nav="home">← ко всем лекциям</div><h1>${escapeHtml(lec.title)}</h1><div class="badge">📘 лекция</div>${renderMemeCard('lec',id)}${lec.infographic}<div class="content">${lec.content}</div><div class="conclusion">${lec.conclusion}</div>${renderNavButtons('lec',id)}${relatedPrac?`<div style="margin-top:15px;"><div class="nav-btn-page" data-nav="prac" data-id="${relatedPrac.id}">🔗 Перейти к практике: ${relatedPrac.title}</div></div>`:''}</div>`; }
-function renderPractice(id){ const prac=practices.find(p=>p.id===id); if(!prac) return '<div class="page"><p>Практика не найдена</p></div>'; const relatedLec=lectures.find(l=>l.num===prac.num); return `<div class="page"><div class="back" data-nav="home">← ко всем практикам</div><h1>${escapeHtml(prac.title)}</h1><div class="badge">🛠️ практика</div>${renderMemeCard('prac',id)}<div class="content">${prac.content}</div><div class="conclusion">${prac.conclusion}</div>${renderNavButtons('prac',id)}${relatedLec?`<div style="margin-top:15px;"><div class="nav-btn-page" data-nav="lec" data-id="${relatedLec.id}">🔗 Перейти к лекции: ${relatedLec.title}</div></div>`:''}</div>`; }
+function renderNavButtons(type,id){ const {prev,next}=getPrevNext(type,id); return `<div class="nav-buttons">${prev?`<div class="nav-btn-page" data-nav="${prev.type}" data-id="${prev.id}">← Предыдущая</div>`:'<div class="nav-btn-page" style="opacity:0.3;">← Предыдущая</div>'}<div class="nav-btn-page" data-nav="home">🏠 На главную</div>${next?`<div class="nav-btn-page" data-nav="${next.type}" data-id="${next.id}">Следующая →</div>`:'<div class="nav-btn-page" style="opacity:0.3;">Следующая →</div>'}</div>`; }
+// ========== ФУНКЦИИ РЕНДЕРИНГА (ТЕСТ ПЕРЕД КОНТЕНТОМ) ==========
+
+function renderLecture(id) {
+    const lec = lectures.find(l => l.id === id);
+    if (!lec) return '<div class="page"><p>Лекция не найдена</p></div>';
+    const relatedPrac = practices.find(p => p.num === lec.num);
+    return `<div class="page">
+        <div class="back" data-nav="home">← ко всем лекциям</div>
+        <h1>${escapeHtml(lec.title)}</h1>
+        <div class="badge">📘 лекция</div>
+        
+        ${renderMemeCard('lec', id)}
+        <div class="content">${lec.content}</div>
+	${lec.infographic ? lec.infographic : ''}
+        <div class="conclusion">${lec.conclusion}</div>
+        ${renderNavButtons('lec', id)}
+        ${relatedPrac ? `<div style="margin-top:15px;"><div class="nav-btn-page" data-nav="prac" data-id="${relatedPrac.id}">🔗 Перейти к практике</div></div>` : ''}
+    </div>`;
+}
+
+function renderPractice(id) {
+    const prac = practices.find(p => p.id === id);
+    if (!prac) return '<div class="page"><p>Практика не найдена</p></div>';
+    const relatedLec = lectures.find(l => l.num === prac.num);
+    return `<div class="page">
+        <div class="back" data-nav="home">← ко всем практикам</div>
+        <h1>${escapeHtml(prac.title)}</h1>
+        <div class="badge">🛠️ практика</div>
+        ${prac.infographic ? prac.infographic : ''}
+        ${renderMemeCard('prac', id)}
+        <div class="content">${prac.content}</div>
+        <div class="conclusion">${prac.conclusion}</div>
+        ${renderNavButtons('prac', id)}
+        ${relatedLec ? `<div style="margin-top:15px;"><div class="nav-btn-page" data-nav="lec" data-id="${relatedLec.id}">🔗 Перейти к лекции</div></div>` : ''}
+    </div>`;
+}
+
 function escapeHtml(str){ if(!str) return ''; return str.replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
-function initMemeCarousel() { const slides = document.querySelectorAll('.meme-slide'); if (slides.length === 0) return; const showSlide = (index) => { slides.forEach((slide, i) => { slide.classList.toggle('active', i === index); }); }; const prevBtn = document.getElementById('prevMeme'); const nextBtn = document.getElementById('nextMeme'); if (prevBtn) { prevBtn.onclick = () => { memeIndex = (memeIndex - 1 + tiktokMemes.length) % tiktokMemes.length; showSlide(memeIndex); }; } if (nextBtn) { nextBtn.onclick = () => { memeIndex = (memeIndex + 1) % tiktokMemes.length; showSlide(memeIndex); }; } }
 let activeTab="home";
 function setActiveNav(){ document.querySelectorAll('.nav-btn').forEach(btn=>{ const nav=btn.getAttribute('data-nav'); if((nav==='home'&&activeTab==='home')||(nav==='test'&&activeTab==='test')) btn.classList.add('active'); else btn.classList.remove('active'); }); }
 function handleNav(e){ const t=e.target.closest('[data-nav]'); if(!t) return; const nav=t.getAttribute('data-nav'); const id=t.getAttribute('data-id'); e.preventDefault(); if(nav==='home') window.location.hash='home'; else if(nav==='lec') window.location.hash=id; else if(nav==='prac') window.location.hash=id; else if(nav==='test') window.location.hash='test'; }
-function renderContent(){ const hash=window.location.hash.slice(1); const app=document.getElementById('app'); if(hash==='test'){ activeTab='test'; setActiveNav(); app.innerHTML=renderTest(); attachTestHandlers(); }else if(hash.startsWith('lec')){ activeTab='home'; setActiveNav(); app.innerHTML=renderLecture(hash); }else if(hash.startsWith('prac')){ activeTab='home'; setActiveNav(); app.innerHTML=renderPractice(hash); }else{ activeTab='home'; setActiveNav(); app.innerHTML=renderHome(); setTimeout(()=>{ initSnake(); document.getElementById('resetSnakeBtn')?.addEventListener('click',resetSnake); window.addEventListener('keydown',changeDir); initMemeCarousel(); },50); } document.getElementById('app')?.addEventListener('click',handleNav); }
+function renderContent(){ const hash=window.location.hash.slice(1); const app=document.getElementById('app'); if(hash==='test'){ activeTab='test'; setActiveNav(); app.innerHTML=renderTest(); attachTestHandlers(); }else if(hash.startsWith('lec')){ activeTab='home'; setActiveNav(); app.innerHTML=renderLecture(hash); }else if(hash.startsWith('prac')){ activeTab='home'; setActiveNav(); app.innerHTML=renderPractice(hash); }else{ activeTab='home'; setActiveNav(); app.innerHTML=renderHome(); setTimeout(()=>{ initSnake(); document.getElementById('resetSnakeBtn')?.addEventListener('click',resetSnake); window.addEventListener('keydown',changeDir); },50); } document.getElementById('app')?.addEventListener('click',handleNav); }
 document.querySelectorAll('.nav-btn').forEach(btn=>{ btn.addEventListener('click',()=>{ const to=btn.getAttribute('data-nav'); window.location.hash=to==='home'?'home':'test'; }); });
 window.addEventListener('hashchange',renderContent);
 if(!window.location.hash||window.location.hash==='#') window.location.hash='home';
