@@ -400,7 +400,7 @@ content:`<h2>Лекция 8: API, WebSockets и асинхронность в Dj
 conclusion:`<h3>📌 Выводы по лекции 8</h3><p>Современный Django — это не только веб-фреймворк, но и экосистема для создания API, real-time приложений, асинхронной обработки и микросервисов. Django REST Framework, Channels, Celery и Docker — must-have для профессионального разработчика.</p>`}
 ];
 
-// ===================== ПОЛНЫЕ ПРАКТИКИ (1-8) — ИСПРАВЛЕННЫЕ =====================
+// ===================== ПРАКТИКИ (20-30 шагов каждая, с кодом) =====================
 const practices = [
 {
     id: "prac1", num: 1,
@@ -408,177 +408,733 @@ const practices = [
     infographic: `<div class="infographic"><h3>🛠️ Установка Django</h3><div class="flow-chart"><span class="flow-step">🐍 Python 3.10+</span><span class="flow-arrow">→</span><span class="flow-step">📁 venv</span><span class="flow-arrow">→</span><span class="flow-step">📦 pip install django</span><span class="flow-arrow">→</span><span class="flow-step">🚀 startproject</span></div></div>`,
     content: `<h2>🔥 Практика №1. Установка и первый проект</h2>
 <p><strong>🎯 Цель:</strong> Настроить виртуальное окружение, установить Django и создать первый проект.</p>
-<ol><li><strong>Проверь версию Python</strong> — должна быть 3.10 или выше<div class="code-block">python --version</div></li>
-<li><strong>Создай папку проекта</strong> и перейди в неё<div class="code-block">mkdir django_practice_1<br>cd django_practice_1</div></li>
-<li><strong>Создай виртуальное окружение</strong><div class="code-block">python -m venv venv</div></li>
-<li><strong>Активируй виртуальное окружение</strong><div class="code-block"><span class="comment"># На Windows:</span><br>venv\\Scripts\\activate<br><span class="comment"># На Mac/Linux:</span><br>source venv/bin/activate</div></li>
-<li><strong>Убедись, что активация прошла успешно</strong> — в начале строки терминала появился префикс (venv)</li>
-<li><strong>Установи Django версии 4.2 LTS</strong><div class="code-block">pip install django==4.2</div></li>
-<li><strong>Проверь установку</strong><div class="code-block">python -m django --version</div><em>Ожидаемый вывод: 4.2.x</em></li>
-<li><strong>Создай проект с именем mynews</strong><div class="code-block">django-admin startproject mynews .</div><em>Точка в конце важна</em></li>
-<li><strong>Посмотри структуру проекта</strong><div class="code-block">ls</div></li>
-<li><strong>Запусти сервер разработки</strong><div class="code-block">python manage.py runserver 8000</div></li>
-<li><strong>Открой браузер и перейди по адресу</strong> http://127.0.0.1:8000</li>
-<li><strong>Останови сервер</strong> и запусти на порту 9000<div class="code-block">python manage.py runserver 9000</div></li>
-<li><strong>Открой файл settings.py</strong> и найди переменную DEBUG<div class="code-block">DEBUG = True</div></li>
-<li><strong>Найди переменную ALLOWED_HOSTS</strong><div class="code-block">ALLOWED_HOSTS = []</div></li>
-<li><strong>Найди переменную INSTALLED_APPS</strong><div class="code-block">django.contrib.admin<br>django.contrib.auth<br>django.contrib.contenttypes<br>django.contrib.sessions<br>django.contrib.messages<br>django.contrib.staticfiles</div></li>
-<li><strong>Найди переменную DATABASES</strong><div class="code-block">'ENGINE': 'django.db.backends.sqlite3'</div></li>
-<li><strong>Найди LANGUAGE_CODE и TIME_ZONE</strong><div class="code-block">LANGUAGE_CODE = 'en-us'<br>TIME_ZONE = 'UTC'</div></li>
-<li><strong>Измени LANGUAGE_CODE на 'ru-ru'</strong> и <strong>TIME_ZONE на 'Europe/Moscow'</strong><div class="code-block">LANGUAGE_CODE = 'ru-ru'<br>TIME_ZONE = 'Europe/Moscow'</div></li>
-<li><strong>Создай файл .gitignore</strong><div class="code-block">venv/<br>__pycache__/<br>db.sqlite3<br>*.pyc<br>.env</div></li>
-<li><strong>Сохрани зависимости в requirements.txt</strong><div class="code-block">pip freeze > requirements.txt</div></li></ol>
-<div class="achievement">🏆 ДОСТИЖЕНИЕ: "Первый старт"</div>`,
-    conclusion: `<h3>✅ Итог практики №1</h3><p>Ты настроил окружение, создал проект, изучил settings.py.</p>`
+
+<ol>
+<li><strong>Проверь версию Python</strong> — должна быть 3.10 или выше
+<div class="code-block">python --version</div>
+<em>Ожидаемый вывод: Python 3.10.x или выше</em></li>
+
+<li><strong>Создай папку проекта</strong> и перейди в неё
+<div class="code-block">mkdir django_practice_1<br>cd django_practice_1</div></li>
+
+<li><strong>Создай виртуальное окружение</strong>
+<div class="code-block">python -m venv venv</div>
+<em>Будет создана папка venv с изолированным Python</em></li>
+
+<li><strong>Активируй виртуальное окружение</strong>
+<div class="code-block"><span class="comment"># На Windows:</span><br>venv\\Scripts\\activate<br><span class="comment"># На Mac/Linux:</span><br>source venv/bin/activate</div>
+<em>В начале строки терминала должен появиться префикс (venv)</em></li>
+
+<li><strong>Установи Django версии 4.2 LTS</strong>
+<div class="code-block">pip install django==4.2</div>
+<em>Установка займёт 1-2 минуты</em></li>
+
+<li><strong>Проверь установку</strong>
+<div class="code-block">python -m django --version</div>
+<em>Ожидаемый вывод: 4.2.x</em></li>
+
+<li><strong>Создай проект с именем mynews</strong>
+<div class="code-block">django-admin startproject mynews .</div>
+<em>Точка в конце важна — она создаёт manage.py в текущей папке</em></li>
+
+<li><strong>Посмотри структуру проекта</strong>
+<div class="code-block">ls</div>
+<em>Должны быть папка mynews и файл manage.py</em></li>
+
+<li><strong>Запусти сервер разработки</strong>
+<div class="code-block">python manage.py runserver 8000</div>
+<em>Сервер запустится на http://127.0.0.1:8000</em></li>
+
+<li><strong>Открой браузер и перейди по адресу</strong>
+<div class="code-block">http://127.0.0.1:8000</div>
+<em>Ты должен увидеть страницу-приветствие Django с ракетой</em></li>
+
+<li><strong>Останови сервер</strong> (Ctrl+C) и запусти на порту 9000
+<div class="code-block">python manage.py runserver 9000</div></li>
+
+<li><strong>Открой файл settings.py</strong> и найди переменную DEBUG
+<div class="code-block">DEBUG = True</div></li>
+
+<li><strong>Найди переменную ALLOWED_HOSTS</strong>
+<div class="code-block">ALLOWED_HOSTS = []</div>
+<em>По умолчанию — пустой список</em></li>
+
+<li><strong>Найди переменную INSTALLED_APPS</strong> — перечисли встроенные приложения
+<div class="code-block">django.contrib.admin<br>django.contrib.auth<br>django.contrib.contenttypes<br>django.contrib.sessions<br>django.contrib.messages<br>django.contrib.staticfiles</div></li>
+
+<li><strong>Найди переменную DATABASES</strong> — какая база данных используется по умолчанию?
+<div class="code-block"><span class="comment"># По умолчанию — SQLite3</span><br>'ENGINE': 'django.db.backends.sqlite3'<br>'NAME': BASE_DIR / 'db.sqlite3'</div></li>
+
+<li><strong>Найди LANGUAGE_CODE и TIME_ZONE</strong>
+<div class="code-block">LANGUAGE_CODE = 'en-us'<br>TIME_ZONE = 'UTC'</div></li>
+
+<li><strong>Измени LANGUAGE_CODE на 'ru-ru'</strong> и <strong>TIME_ZONE на 'Europe/Moscow'</strong>
+<div class="code-block">LANGUAGE_CODE = 'ru-ru'<br>TIME_ZONE = 'Europe/Moscow'</div></li>
+
+<li><strong>Создай файл .gitignore</strong> в корне проекта
+<div class="code-block"><span class="comment"># .gitignore</span><br>venv/<br>__pycache__/<br>db.sqlite3<br>*.pyc<br>.env<br>media/<br>staticfiles/</div></li>
+
+<li><strong>Сохрани все зависимости в requirements.txt</strong>
+<div class="code-block">pip freeze > requirements.txt</div>
+<em>Теперь любой разработчик сможет восстановить окружение командой pip install -r requirements.txt</em></li>
+
+<li><strong>Установи DEBUG = False</strong> и добавь ALLOWED_HOSTS
+<div class="code-block">DEBUG = False<br>ALLOWED_HOSTS = ['127.0.0.1', 'localhost']</div>
+<em>При DEBUG=False статика перестаёт отдаваться — это нормально для продакшена</em></li>
+
+<li><strong>Создай суперпользователя</strong>
+<div class="code-block">python manage.py createsuperuser</div>
+<em>Введи username, email и пароль (пароль не будет отображаться)</em></li>
+
+<li><strong>Запусти сервер и зайди в админку</strong>
+<div class="code-block">python manage.py runserver<br>http://127.0.0.1:8000/admin</div></li>
+
+<li><strong>Установи пакет black для автоформатирования</strong>
+<div class="code-block">pip install black<br>black mynews/settings.py</div></li>
+
+<li><strong>Установи pre-commit для автоматической проверки кода</strong>
+<div class="code-block">pip install pre-commit<br>pre-commit install</div></li>
+
+<li><strong>Создай alias для активации venv</strong>
+<div class="code-block"><span class="comment"># Добавь в ~/.bashrc или ~/.zshrc:</span><br>alias activate="source venv/bin/activate"</div></li>
+
+<li><strong>Сделай скриншот работающего сервера</strong> — это твоё первое достижение!</li>
+</ol>
+<div class="achievement">🏆 ДОСТИЖЕНИЕ: "Первый старт" — ты запустил свой первый Django-проект!</div>`,
+    conclusion: `<h3>✅ Итог практики №1</h3><p>Ты настроил виртуальное окружение, создал проект, изучил settings.py и научился управлять зависимостями.</p>`
 },
 {
     id: "prac2", num: 2,
     title: "🎨 Практика №2. Маршруты, шаблоны и статика",
-    infographic: `<div class="infographic"><h3>🗺️ Маршрутизация в Django</h3><div class="flow-chart"><span class="flow-step">🌐 Запрос</span><span class="flow-arrow">→</span><span class="flow-step">urls.py</span><span class="flow-arrow">→</span><span class="flow-step">include()</span><span class="flow-arrow">→</span><span class="flow-step">View</span><span class="flow-arrow">→</span><span class="flow-step">Template</span></div></div>`,
+    infographic: `<div class="infographic"><h3>🗺️ Маршрутизация в Django</h3><div class="flow-chart"><span class="flow-step">🌐 Запрос</span><span class="flow-arrow">→</span><span class="flow-step">urls.py (проект)</span><span class="flow-arrow">→</span><span class="flow-step">include()</span><span class="flow-arrow">→</span><span class="flow-step">urls.py (приложение)</span><span class="flow-arrow">→</span><span class="flow-step">👁️ View</span><span class="flow-arrow">→</span><span class="flow-step">📄 Template</span></div></div>`,
     content: `<h2>🎨 Практика №2. Маршруты, шаблоны и статика</h2>
-<ol><li><strong>Создай приложение blog</strong><div class="code-block">python manage.py startapp blog</div></li>
-<li><strong>Зарегистрируй приложение в settings.py</strong><div class="code-block">INSTALLED_APPS = [<br>&nbsp;&nbsp;&nbsp;&nbsp;...<br>&nbsp;&nbsp;&nbsp;&nbsp;'blog',<br>]</div></li>
-<li><strong>В blog/views.py создай функцию index</strong><div class="code-block">def index(request):<br>&nbsp;&nbsp;&nbsp;&nbsp;return HttpResponse('Страница новостей')</div></li>
-<li><strong>Создай файл blog/urls.py</strong><div class="code-block">from django.urls import path<br>from . import views<br>urlpatterns = [<br>&nbsp;&nbsp;&nbsp;&nbsp;path('', views.index, name='home'),<br>]</div></li>
-<li><strong>В корневом urls.py подключи маршруты</strong><div class="code-block">path('blog/', include('blog.urls')),</div></li>
-<li><strong>Запусти сервер и проверь</strong> http://127.0.0.1:8000/blog/</li>
-<li><strong>Добавь представление about</strong><div class="code-block">def about(request):<br>&nbsp;&nbsp;&nbsp;&nbsp;return HttpResponse('О проекте')</div></li>
-<li><strong>Пропиши маршрут для about</strong><div class="code-block">path('about/', views.about, name='about'),</div></li>
-<li><strong>Создай post_detail с параметром post_id</strong><div class="code-block">def post_detail(request, post_id):<br>&nbsp;&nbsp;&nbsp;&nbsp;return HttpResponse(f'Вы смотрите пост номер {post_id}')</div></li>
-<li><strong>Добавь динамический маршрут</strong><div class="code-block">path('post/&lt;int:post_id&gt;/', views.post_detail, name='post_detail'),</div></li>
-<li><strong>Проверь динамический маршрут</strong> http://127.0.0.1:8000/blog/post/42/</li>
-<li><strong>Создай папки для шаблонов</strong><div class="code-block">mkdir -p blog/templates/blog</div></li>
-<li><strong>Создай базовый шаблон base.html</strong><div class="code-block">&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>&lt;head&gt;<br>&lt;title&gt;{% block title %}Мой блог{% endblock %}&lt;/title&gt;<br>&lt;/head&gt;<br>&lt;body&gt;<br>&lt;nav&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="{% url 'home' %}"&gt;Главная&lt;/a&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="{% url 'about' %}"&gt;О нас&lt;/a&gt;<br>&lt;/nav&gt;<br>&lt;main&gt;{% block content %}{% endblock %}&lt;/main&gt;<br>&lt;/body&gt;<br>&lt;/html&gt;</div></li>
-<li><strong>Создай index.html</strong><div class="code-block">{% extends 'blog/base.html' %}<br>{% block title %}Главная{% endblock %}<br>{% block content %}&lt;h1&gt;Добро пожаловать!&lt;/h1&gt;{% endblock %}</div></li>
-<li><strong>Измени представление index на render</strong><div class="code-block">def index(request):<br>&nbsp;&nbsp;&nbsp;&nbsp;return render(request, 'blog/index.html')</div></li>
-<li><strong>Создай about.html</strong><div class="code-block">{% extends 'blog/base.html' %}<br>{% block title %}О нас{% endblock %}<br>{% block content %}&lt;h1&gt;О проекте&lt;/h1&gt;{% endblock %}</div></li>
-<li><strong>Измени представление about на render</strong><div class="code-block">def about(request):<br>&nbsp;&nbsp;&nbsp;&nbsp;return render(request, 'blog/about.html')</div></li>
-<li><strong>Добавь ссылки в index.html</strong><div class="code-block">&lt;a href="{% url 'about' %}"&gt;О проекте&lt;/a&gt;<br>&lt;a href="{% url 'post_detail' 1 %}"&gt;Первый пост&lt;/a&gt;</div></li>
-<li><strong>Создай папку для статики</strong><div class="code-block">mkdir -p blog/static/blog</div></li>
-<li><strong>Создай style.css</strong><div class="code-block">body { font-family: sans-serif; max-width: 800px; margin: 0 auto; }<br>nav a { margin-right: 15px; color: #1e6f3f; }</div></li>
-<li><strong>Подключи CSS в base.html</strong><div class="code-block">{% load static %}<br>&lt;link rel="stylesheet" href="{% static 'blog/style.css' %}"&gt;</div></li>
-<li><strong>Проверь работу вкладок браузера</strong></li></ol>
-<div class="achievement">🏆 ДОСТИЖЕНИЕ: "Мастер маршрутов"</div>`,
-    conclusion: `<h3>✅ Итог практики №2</h3><p>Ты создал приложение с маршрутизацией, шаблонами и CSS.</p>`
+<p><strong>🎯 Цель:</strong> Создать полноценное приложение с маршрутизацией, шаблонами и CSS.</p>
+
+<ol>
+<li><strong>Создай приложение blog</strong>
+<div class="code-block">python manage.py startapp blog</div>
+<em>Появится папка blog с файлами models.py, views.py, admin.py</em></li>
+
+<li><strong>Зарегистрируй приложение в settings.py</strong>
+<div class="code-block">INSTALLED_APPS = [<br>&nbsp;&nbsp;&nbsp;&nbsp;...<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'blog'</span>,<br>]</div></li>
+
+<li><strong>В blog/views.py создай первую функцию index</strong>
+<div class="code-block"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponse<br><br><span class="keyword">def</span> <span class="function">index</span>(request):<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> HttpResponse(<span class="string">'Страница новостей'</span>)</div></li>
+
+<li><strong>Создай файл blog/urls.py и пропиши маршруты</strong>
+<div class="code-block"><span class="keyword">from</span> django.urls <span class="keyword">import</span> path<br><span class="keyword">from</span> . <span class="keyword">import</span> views<br><br>urlpatterns = [<br>&nbsp;&nbsp;&nbsp;&nbsp;path(<span class="string">''</span>, views.index, name=<span class="string">'home'</span>),<br>]</div></li>
+
+<li><strong>В корневом urls.py подключи маршруты приложения</strong>
+<div class="code-block"><span class="keyword">from</span> django.urls <span class="keyword">import</span> path, include<br><br>urlpatterns = [<br>&nbsp;&nbsp;&nbsp;&nbsp;path(<span class="string">'admin/'</span>, admin.site.urls),<br>&nbsp;&nbsp;&nbsp;&nbsp;path(<span class="string">'blog/'</span>, include(<span class="string">'blog.urls'</span>)),<br>]</div></li>
+
+<li><strong>Запусти сервер и проверь</strong>
+<div class="code-block">http://127.0.0.1:8000/blog/</div>
+<em>Должен отображаться текст "Страница новостей"</em></li>
+
+<li><strong>Добавь второе представление about</strong>
+<div class="code-block"><span class="keyword">def</span> <span class="function">about</span>(request):<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> HttpResponse(<span class="string">'О проекте'</span>)</div></li>
+
+<li><strong>Пропиши маршрут для about в blog/urls.py</strong>
+<div class="code-block">path(<span class="string">'about/'</span>, views.about, name=<span class="string">'about'</span>),</div></li>
+
+<li><strong>Проверь страницу about</strong>
+<div class="code-block">http://127.0.0.1:8000/blog/about/</div></li>
+
+<li><strong>Создай третье представление post_detail с параметром post_id</strong>
+<div class="code-block"><span class="keyword">def</span> <span class="function">post_detail</span>(request, post_id):<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> HttpResponse(f<span class="string">'Вы смотрите пост номер {post_id}'</span>)</div></li>
+
+<li><strong>Добавь динамический маршрут в blog/urls.py</strong>
+<div class="code-block">path(<span class="string">'post/&lt;int:post_id&gt;/'</span>, views.post_detail, name=<span class="string">'post_detail'</span>),</div></li>
+
+<li><strong>Проверь динамический маршрут</strong>
+<div class="code-block">http://127.0.0.1:8000/blog/post/42/</div>
+<em>Должно выводиться "Вы смотрите пост номер 42"</em></li>
+
+<li><strong>Создай папки для шаблонов</strong>
+<div class="code-block">mkdir -p blog/templates/blog</div></li>
+
+<li><strong>Создай базовый шаблон base.html</strong>
+<div class="code-block">&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>&lt;head&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;{% block title %}Мой блог{% endblock %}&lt;/title&gt;<br>&lt;/head&gt;<br>&lt;body&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;nav&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="{% url 'home' %}"&gt;Главная&lt;/a&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="{% url 'about' %}"&gt;О нас&lt;/a&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/nav&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;main&gt;{% block content %}{% endblock %}&lt;/main&gt;<br>&lt;/body&gt;<br>&lt;/html&gt;</div></li>
+
+<li><strong>Создай index.html, расширяющий base.html</strong>
+<div class="code-block">{% extends 'blog/base.html' %}<br><br>{% block title %}Главная страница{% endblock %}<br><br>{% block content %}<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;h1&gt;Добро пожаловать на сайт новостей!&lt;/h1&gt;<br>{% endblock %}</div></li>
+
+<li><strong>Измени представление index, чтобы использовать render с шаблоном</strong>
+<div class="code-block"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render<br><br><span class="keyword">def</span> <span class="function">index</span>(request):<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> render(request, <span class="string">'blog/index.html'</span>)</div></li>
+
+<li><strong>Создай about.html по аналогии</strong>
+<div class="code-block">{% extends 'blog/base.html' %}<br>{% block title %}О нас{% endblock %}<br>{% block content %}&lt;h1&gt;О проекте&lt;/h1&gt;&lt;p&gt;Это учебный блог на Django&lt;/p&gt;{% endblock %}</div></li>
+
+<li><strong>Измени представление about на рендер шаблона</strong>
+<div class="code-block"><span class="keyword">def</span> <span class="function">about</span>(request):<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> render(request, <span class="string">'blog/about.html'</span>)</div></li>
+
+<li><strong>Добавь в index.html ссылку на страницу about</strong>
+<div class="code-block">&lt;a href="{% url 'about' %}"&gt;О проекте&lt;/a&gt;</div></li>
+
+<li><strong>Добавь в index.html ссылку на детальную страницу</strong>
+<div class="code-block">&lt;a href="{% url 'post_detail' 1 %}"&gt;Первый пост&lt;/a&gt;</div></li>
+
+<li><strong>Создай папку для статических файлов</strong>
+<div class="code-block">mkdir -p blog/static/blog</div></li>
+
+<li><strong>Создай файл style.css</strong>
+<div class="code-block">body {<br>&nbsp;&nbsp;&nbsp;&nbsp;font-family: 'Segoe UI', sans-serif;<br>&nbsp;&nbsp;&nbsp;&nbsp;max-width: 800px;<br>&nbsp;&nbsp;&nbsp;&nbsp;margin: 0 auto;<br>&nbsp;&nbsp;&nbsp;&nbsp;padding: 20px;<br>&nbsp;&nbsp;&nbsp;&nbsp;background: #f5f5f5;<br>}<br>nav a {<br>&nbsp;&nbsp;&nbsp;&nbsp;margin-right: 15px;<br>&nbsp;&nbsp;&nbsp;&nbsp;text-decoration: none;<br>&nbsp;&nbsp;&nbsp;&nbsp;color: #1e6f3f;<br>}<br>h1 { color: #1e6f3f; }</div></li>
+
+<li><strong>В base.html загрузи статические файлы и подключи CSS</strong>
+<div class="code-block">{% load static %}<br>&lt;link rel="stylesheet" href="{% static 'blog/style.css' %}"&gt;</div></li>
+
+<li><strong>Добавь блок title и переопредели его в дочерних шаблонах</strong>
+<div class="code-block"><span class="comment"># В about.html:</span><br>{% block title %}О проекте — Мой блог{% endblock %}</div></li>
+
+<li><strong>Проверь, что вкладки браузера для разных страниц показывают разные названия</strong></li>
+
+<li><strong>Добавь Bootstrap через CDN для красивых кнопок</strong>
+<div class="code-block">&lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"&gt;</div></li>
+
+<li><strong>Сделай адаптивный дизайн с помощью медиа-запросов</strong>
+<div class="code-block">@media (max-width: 600px) {<br>&nbsp;&nbsp;&nbsp;&nbsp;body { padding: 10px; }<br>&nbsp;&nbsp;&nbsp;&nbsp;nav a { display: block; margin: 5px 0; }<br>}</div></li>
+
+<li><strong>Добавь footer с копирайтом на все страницы</strong>
+<div class="code-block">&lt;footer&gt;&copy; 2024 Мой блог. Все права защищены.&lt;/footer&gt;</div></li>
+
+<li><strong>Создай страницу 404.html для несуществующих маршрутов</strong>
+<div class="code-block"><span class="comment"># В корневой папке templates создай 404.html</span><br>&lt;h1&gt;404 - Страница не найдена&lt;/h1&gt;</div></li>
+
+<li><strong>Добавь иконку на вкладку браузера (favicon)</strong>
+<div class="code-block">&lt;link rel="icon" type="image/x-icon" href="{% static 'blog/favicon.ico' %}"&gt;</div></li>
+</ol>
+<div class="achievement">🏆 ДОСТИЖЕНИЕ: "Мастер маршрутов" — ты создал полноценное приложение с навигацией, шаблонами и стилями!</div>`,
+    conclusion: `<h3>✅ Итог практики №2</h3><p>Ты создал приложение blog, настроил маршрутизацию, научился использовать наследование шаблонов и подключать статические файлы.</p>`
 },
 {
     id: "prac3", num: 3,
     title: "📝 Практика №3. Модели, миграции и ORM",
-    infographic: `<div class="infographic"><h3>🗄️ CRUD через ORM</h3><div class="infographic-grid"><div class="info-card">create()</div><div class="info-card">filter()</div><div class="info-card">get()</div><div class="info-card">update()</div><div class="info-card">delete()</div></div></div>`,
+    infographic: `<div class="infographic"><h3>🗄️ CRUD через ORM</h3><div class="infographic-grid"><div class="info-card">create()</div><div class="info-card">filter()</div><div class="info-card">get()</div><div class="info-card">update()</div><div class="info-card">delete()</div><div class="info-card">order_by()</div></div></div>`,
     content: `<h2>📝 Практика №3. Модели, миграции и ORM</h2>
-<ol><li><strong>Создай модель Post в models.py</strong><div class="code-block">class Post(models.Model):<br>&nbsp;&nbsp;&nbsp;&nbsp;title = models.CharField(max_length=200)<br>&nbsp;&nbsp;&nbsp;&nbsp;slug = models.SlugField(unique=True)<br>&nbsp;&nbsp;&nbsp;&nbsp;content = models.TextField()<br>&nbsp;&nbsp;&nbsp;&nbsp;published_date = models.DateTimeField(auto_now_add=True)<br>&nbsp;&nbsp;&nbsp;&nbsp;is_published = models.BooleanField(default=False)<br>&nbsp;&nbsp;&nbsp;&nbsp;views_count = models.IntegerField(default=0)<br><br>&nbsp;&nbsp;&nbsp;&nbsp;def __str__(self):<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return self.title<br><br>&nbsp;&nbsp;&nbsp;&nbsp;class Meta:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ordering = ['-published_date']</div></li>
-<li><strong>Выполни миграции</strong><div class="code-block">python manage.py makemigrations<br>python manage.py migrate</div></li>
-<li><strong>Запусти оболочку Django</strong><div class="code-block">python manage.py shell</div></li>
-<li><strong>Импортируй модель и создай посты</strong><div class="code-block">from blog.models import Post<br>Post.objects.create(title='Первый пост', slug='pervyy-post', content='Текст...')<br>Post.objects.create(title='Второй пост', slug='vtoroy-post', is_published=True)</div></li>
-<li><strong>Получи все посты</strong><div class="code-block">Post.objects.all()</div></li>
-<li><strong>Отфильтруй по is_published=True</strong><div class="code-block">Post.objects.filter(is_published=True)</div></li>
-<li><strong>Найди пост по slug</strong><div class="code-block">post = Post.objects.get(slug='pervyy-post')</div></li>
-<li><strong>Обнови заголовок</strong><div class="code-block">post.title = 'Изменённый заголовок'<br>post.save()</div></li>
-<li><strong>Увеличь views_count</strong><div class="code-block">post.views_count += 1<br>post.save()</div></li>
-<li><strong>Удали пост</strong><div class="code-block">Post.objects.filter(slug='vtoroy-post').delete()</div></li>
-<li><strong>Выйди из оболочки</strong><div class="code-block">exit()</div></li>
-<li><strong>В представлении index получи посты</strong><div class="code-block">def index(request):<br>&nbsp;&nbsp;&nbsp;&nbsp;posts = Post.objects.filter(is_published=True)<br>&nbsp;&nbsp;&nbsp;&nbsp;return render(request, 'blog/index.html', {'posts': posts})</div></li>
-<li><strong>В шаблоне index.html выведи посты циклом</strong><div class="code-block">{% for post in posts %}<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;h2&gt;{{ post.title }}&lt;/h2&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;{{ post.published_date|date:"d.m.Y" }}&lt;/p&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="{% url 'post_detail' post.slug %}"&gt;Читать&lt;/a&gt;<br>{% endfor %}</div></li>
-<li><strong>Добавь условие для опубликованных постов</strong><div class="code-block">{% if post.is_published %}&lt;span style="color:green;"&gt;✓ Опубликовано&lt;/span&gt;{% endif %}</div></li>
-<li><strong>Создай детальную страницу по slug</strong><div class="code-block">def post_detail(request, slug):<br>&nbsp;&nbsp;&nbsp;&nbsp;post = get_object_or_404(Post, slug=slug, is_published=True)<br>&nbsp;&nbsp;&nbsp;&nbsp;return render(request, 'blog/post_detail.html', {'post': post})</div></li>
-<li><strong>Создай шаблон post_detail.html</strong><div class="code-block">{% extends 'blog/base.html' %}<br>{% block title %}{{ post.title }}{% endblock %}<br>{% block content %}<br>&lt;h1&gt;{{ post.title }}&lt;/h1&gt;<br>&lt;p&gt;{{ post.published_date|date:"d.m.Y H:i" }}&lt;/p&gt;<br>&lt;div&gt;{{ post.content|linebreaks }}&lt;/div&gt;<br>{% endblock %}</div></li>
-<li><strong>Проверь работу страниц</strong></li></ol>
-<div class="achievement">🏆 ДОСТИЖЕНИЕ: "ORM-гуру"</div>`,
-    conclusion: `<h3>✅ Итог практики №3</h3><p>Ты создал модель, миграции и освоил CRUD через ORM.</p>`
+<p><strong>🎯 Цель:</strong> Освоить ORM Django на 100% — научиться создавать, фильтровать, обновлять и удалять данные через Python.</p>
+
+<ol>
+<li><strong>Открой blog/models.py и создай модель Post</strong>
+<div class="code-block"><span class="keyword">from</span> django.db <span class="keyword">import</span> models<br><span class="keyword">from</span> django.utils <span class="keyword">import</span> timezone<br><br><span class="keyword">class</span> <span class="function">Post</span>(models.Model):<br>&nbsp;&nbsp;&nbsp;&nbsp;title = models.CharField(max_length=200, verbose_name=<span class="string">'Заголовок'</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;slug = models.SlugField(unique=True, max_length=200)<br>&nbsp;&nbsp;&nbsp;&nbsp;content = models.TextField(verbose_name=<span class="string">'Содержание'</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;published_date = models.DateTimeField(auto_now_add=True)<br>&nbsp;&nbsp;&nbsp;&nbsp;is_published = models.BooleanField(default=False)<br>&nbsp;&nbsp;&nbsp;&nbsp;views_count = models.IntegerField(default=0)<br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">def</span> <span class="function">__str__</span>(self):<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> self.title<br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">class</span> <span class="function">Meta</span>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ordering = [<span class="string">'-published_date'</span>]</div></li>
+
+<li><strong>Добавь в модель метод, возвращающий количество комментариев</strong>
+<div class="code-block"><span class="keyword">def</span> <span class="function">comments_count</span>(self):<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> self.comments.count()</div></li>
+
+<li><strong>Создай миграцию</strong>
+<div class="code-block">python manage.py makemigrations</div>
+<em>Будет создан файл migrations/0001_initial.py</em></li>
+
+<li><strong>Посмотри SQL-код миграции</strong>
+<div class="code-block">python manage.py sqlmigrate blog 0001</div>
+<em>Ты увидишь SQL-запросы CREATE TABLE</em></li>
+
+<li><strong>Примени миграцию</strong>
+<div class="code-block">python manage.py migrate</div>
+<em>Таблица blog_post создана в базе данных</em></li>
+
+<li><strong>Добавь поле slug, если его ещё нет</strong>
+<div class="code-block">slug = models.SlugField(unique=True, max_length=200, blank=True)</div></li>
+
+<li><strong>Создай новую миграцию для добавления поля slug</strong>
+<div class="code-block">python manage.py makemigrations<br>python manage.py migrate</div></li>
+
+<li><strong>Запусти оболочку Django</strong>
+<div class="code-block">python manage.py shell</div></li>
+
+<li><strong>Импортируй модель Post</strong>
+<div class="code-block"><span class="keyword">from</span> blog.models <span class="keyword">import</span> Post</div></li>
+
+<li><strong>Создай первый пост через create()</strong>
+<div class="code-block">Post.objects.create(<br>&nbsp;&nbsp;&nbsp;&nbsp;title=<span class="string">'Первый пост'</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;slug=<span class="string">'pervyy-post'</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;content=<span class="string">'Текст первого поста'</span><br>)</div></li>
+
+<li><strong>Создай второй пост с is_published=True</strong>
+<div class="code-block">Post.objects.create(<br>&nbsp;&nbsp;&nbsp;&nbsp;title=<span class="string">'Второй пост'</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;slug=<span class="string">'vtoroy-post'</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;content=<span class="string">'Текст второго поста'</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;is_published=True<br>)</div></li>
+
+<li><strong>Создай третий пост через конструктор и save()</strong>
+<div class="code-block">p = Post(title=<span class="string">'Третий пост'</span>, slug=<span class="string">'tretiy-post'</span>, content=<span class="string">'Текст третьего поста'</span>)<br>p.save()</div></li>
+
+<li><strong>Получи все посты</strong>
+<div class="code-block">Post.objects.all()</div>
+<em>Вернёт QuerySet со всеми постами</em></li>
+
+<li><strong>Получи первый пост</strong>
+<div class="code-block">Post.objects.first()</div></li>
+
+<li><strong>Получи последний пост</strong>
+<div class="code-block">Post.objects.last()</div></li>
+
+<li><strong>Отфильтруй посты по is_published=True</strong>
+<div class="code-block">Post.objects.filter(is_published=True)</div></li>
+
+<li><strong>Отфильтруй посты, созданные сегодня</strong>
+<div class="code-block"><span class="keyword">from</span> django.utils <span class="keyword">import</span> timezone<br>today = timezone.now().date()<br>Post.objects.filter(published_date__date=today)</div></li>
+
+<li><strong>Найди пост по slug</strong>
+<div class="code-block">post = Post.objects.get(slug=<span class="string">'pervyy-post'</span>)</div></li>
+
+<li><strong>Обнови заголовок поста</strong>
+<div class="code-block">post.title = <span class="string">'Первый пост (изменённый)'</span><br>post.save()</div></li>
+
+<li><strong>Увеличь views_count на 1</strong>
+<div class="code-block">post.views_count += 1<br>post.save()</div></li>
+
+<li><strong>Обнови несколько полей через update()</strong>
+<div class="code-block">Post.objects.filter(slug=<span class="string">'vtoroy-post'</span>).update(is_published=False)</div></li>
+
+<li><strong>Отсортируй посты по views_count по убыванию</strong>
+<div class="code-block">Post.objects.all().order_by(<span class="string">'-views_count'</span>)</div></li>
+
+<li><strong>Удали второй пост</strong>
+<div class="code-block">Post.objects.filter(slug=<span class="string">'vtoroy-post'</span>).delete()</div></li>
+
+<li><strong>Создай 5 постов через цикл</strong>
+<div class="code-block"><span class="keyword">for</span> i <span class="keyword">in</span> range(1, 6):<br>&nbsp;&nbsp;&nbsp;&nbsp;Post.objects.create(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title=f<span class="string">'Пост {i}'</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slug=f<span class="string">'post-{i}'</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;content=f<span class="string">'Содержимое поста {i}'</span><br>&nbsp;&nbsp;&nbsp;&nbsp;)</div></li>
+
+<li><strong>Выйди из оболочки</strong>
+<div class="code-block">exit()</div></li>
+
+<li><strong>В представлении index получи все посты и передай в шаблон</strong>
+<div class="code-block"><span class="keyword">def</span> <span class="function">index</span>(request):<br>&nbsp;&nbsp;&nbsp;&nbsp;posts = Post.objects.filter(is_published=True)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> render(request, <span class="string">'blog/index.html'</span>, {<span class="string">'posts'</span>: posts})</div></li>
+
+<li><strong>В шаблоне index.html добавь цикл для вывода постов</strong>
+<div class="code-block">{% for post in posts %}<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;h2&gt;{{ post.title }}&lt;/h2&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;{{ post.published_date|date:"d.m.Y" }}&lt;/p&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="{% url 'post_detail' post.slug %}"&gt;Читать далее&lt;/a&gt;<br>{% empty %}<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Нет постов.&lt;/p&gt;<br>{% endfor %}</div></li>
+
+<li><strong>Добавь условие для отображения опубликованных постов зелёным цветом</strong>
+<div class="code-block">{% if post.is_published %}<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;span style="color: green;"&gt;✓ Опубликовано&lt;/span&gt;<br>{% else %}<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;span style="color: gray;"&gt;✗ Черновик&lt;/span&gt;<br>{% endif %}</div></li>
+
+<li><strong>Создай детальную страницу по slug с обработкой 404</strong>
+<div class="code-block"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> get_object_or_404<br><br><span class="keyword">def</span> <span class="function">post_detail</span>(request, slug):<br>&nbsp;&nbsp;&nbsp;&nbsp;post = get_object_or_404(Post, slug=slug, is_published=True)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> render(request, <span class="string">'blog/post_detail.html'</span>, {<span class="string">'post'</span>: post})</div></li>
+
+<li><strong>Создай шаблон post_detail.html</strong>
+<div class="code-block">{% extends 'blog/base.html' %}<br>{% block title %}{{ post.title }}{% endblock %}<br>{% block content %}<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;h1&gt;{{ post.title }}&lt;/h1&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;{{ post.published_date|date:"d.m.Y H:i" }}&lt;/p&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;{{ post.content|linebreaks }}&lt;/div&gt;<br>{% endblock %}</div></li>
+
+<li><strong>Проверь работу страницы списка постов и детальной страницы</strong></li>
+
+<li><strong>Добавь пагинацию на страницу списка постов (по 5 постов)</strong>
+<div class="code-block"><span class="keyword">from</span> django.core.paginator <span class="keyword">import</span> Paginator<br><br>paginator = Paginator(posts, 5)<br>page_number = request.GET.get(<span class="string">'page'</span>)<br>page_obj = paginator.get_page(page_number)</div></li>
+
+<li><strong>Добавь ссылки на пагинацию в шаблоне</strong>
+<div class="code-block">{% if page_obj.has_previous %}<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="?page=1"&gt;Первая&lt;/a&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="?page={{ page_obj.previous_page_number }}"&gt;Предыдущая&lt;/a&gt;<br>{% endif %}<br>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}<br>{% if page_obj.has_next %}<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="?page={{ page_obj.next_page_number }}"&gt;Следующая&lt;/a&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="?page={{ page_obj.paginator.num_pages }}"&gt;Последняя&lt;/a&gt;<br>{% endif %}</div></li>
+</ol>
+<div class="achievement">🏆 ДОСТИЖЕНИЕ: "ORM-гуру" — ты выполнил 30+ запросов и создал полноценный блог с постами!</div>`,
+    conclusion: `<h3>✅ Итог практики №3</h3><p>Ты создал модель Post, выполнил миграции, освоил CRUD-операции через ORM и интегрировал модели с шаблонами.</p>`
 },
 {
     id: "prac4", num: 4,
     title: "👑 Практика №4. Административная панель",
-    infographic: `<div class="infographic"><h3>⚙️ Кастомизация Admin</h3><div class="infographic-grid"><div class="info-card">list_display</div><div class="info-card">list_filter</div><div class="info-card">search_fields</div><div class="info-card">actions</div></div></div>`,
+    infographic: `<div class="infographic"><h3>⚙️ Кастомизация Admin</h3><div class="infographic-grid"><div class="info-card">list_display</div><div class="info-card">list_filter</div><div class="info-card">search_fields</div><div class="info-card">prepopulated_fields</div><div class="info-card">fieldsets</div><div class="info-card">actions</div></div></div>`,
     content: `<h2>👑 Практика №4. Административная панель</h2>
-<ol><li><strong>Создай суперпользователя</strong><div class="code-block">python manage.py createsuperuser</div></li>
-<li><strong>Запусти сервер и зайди в /admin</strong></li>
-<li><strong>Зарегистрируй модель в admin.py</strong><div class="code-block">from django.contrib import admin<br>from .models import Post<br>admin.site.register(Post)</div></li>
-<li><strong>Создай класс PostAdmin</strong><div class="code-block">class PostAdmin(admin.ModelAdmin):<br>&nbsp;&nbsp;&nbsp;&nbsp;list_display = ('id', 'title', 'published_date', 'is_published')<br>&nbsp;&nbsp;&nbsp;&nbsp;list_filter = ('is_published', 'published_date')<br>&nbsp;&nbsp;&nbsp;&nbsp;search_fields = ('title', 'content')<br>&nbsp;&nbsp;&nbsp;&nbsp;prepopulated_fields = {'slug': ('title',)}<br>&nbsp;&nbsp;&nbsp;&nbsp;list_per_page = 5<br>&nbsp;&nbsp;&nbsp;&nbsp;actions = ['make_published']<br><br>&nbsp;&nbsp;&nbsp;&nbsp;def make_published(self, request, queryset):<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;queryset.update(is_published=True)<br>&nbsp;&nbsp;&nbsp;&nbsp;make_published.short_description = "Опубликовать выбранные посты"<br><br>admin.site.register(Post, PostAdmin)</div></li>
-<li><strong>Добавь fieldsets для группировки</strong><div class="code-block">fieldsets = (<br>&nbsp;&nbsp;&nbsp;&nbsp;('Основное', {'fields': ('title', 'slug', 'content')}),<br>&nbsp;&nbsp;&nbsp;&nbsp;('Публикация', {'fields': ('is_published',), 'classes': ('collapse',)}),<br>)</div></li>
-<li><strong>Проверь работу действий в админке</strong></li></ol>
-<div class="achievement">🏆 ДОСТИЖЕНИЕ: "Admin Ninja"</div>`,
-    conclusion: `<h3>✅ Итог практики №4</h3><p>Ты настроил админку с фильтрами, поиском и массовыми действиями.</p>`
+<p><strong>🎯 Цель:</strong> Превратить стандартную админку в мощный инструмент управления контентом.</p>
+
+<ol>
+<li><strong>Создай суперпользователя</strong>
+<div class="code-block">python manage.py createsuperuser</div>
+<em>Введи username, email и пароль (пароль не будет отображаться)</em></li>
+
+<li><strong>Запусти сервер и перейди в административную панель</strong>
+<div class="code-block">python manage.py runserver<br>http://127.0.0.1:8000/admin</div></li>
+
+<li><strong>Войди с созданными учётными данными</strong></li>
+
+<li><strong>Убедись, что раздела Posts пока нет</strong> — модель ещё не зарегистрирована</li>
+
+<li><strong>Открой blog/admin.py и импортируй модель Post</strong>
+<div class="code-block"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin<br><span class="keyword">from</span> .models <span class="keyword">import</span> Post</div></li>
+
+<li><strong>Зарегистрируй модель простым способом</strong>
+<div class="code-block">admin.site.register(Post)</div></li>
+
+<li><strong>Обнови страницу админки</strong> — раздел Posts должен появиться</li>
+
+<li><strong>Добавь несколько постов через админку</strong> для тестирования</li>
+
+<li><strong>Создай класс PostAdmin для кастомизации</strong>
+<div class="code-block"><span class="keyword">class</span> <span class="function">PostAdmin</span>(admin.ModelAdmin):<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">pass</span></div></li>
+
+<li><strong>Зарегистрируй модель с кастомным классом</strong>
+<div class="code-block">admin.site.register(Post, PostAdmin)</div></li>
+
+<li><strong>Добавь атрибут list_display</strong>
+<div class="code-block">list_display = (<span class="string">'id'</span>, <span class="string">'title'</span>, <span class="string">'published_date'</span>, <span class="string">'is_published'</span>, <span class="string">'views_count'</span>)</div></li>
+
+<li><strong>Добавь list_display_links</strong>
+<div class="code-block">list_display_links = (<span class="string">'title'</span>,)</div>
+<em>Теперь по заголовку можно перейти к редактированию</em></li>
+
+<li><strong>Добавь list_filter для фильтрации</strong>
+<div class="code-block">list_filter = (<span class="string">'is_published'</span>, <span class="string">'published_date'</span>)</div></li>
+
+<li><strong>Добавь search_fields для поиска</strong>
+<div class="code-block">search_fields = (<span class="string">'title'</span>, <span class="string">'content'</span>)</div></li>
+
+<li><strong>Добавь ordering</strong>
+<div class="code-block">ordering = (<span class="string">'-published_date'</span>,)</div></li>
+
+<li><strong>Добавь пагинацию</strong>
+<div class="code-block">list_per_page = 5</div></li>
+
+<li><strong>Добавь prepopulated_fields для автоматического заполнения slug</strong>
+<div class="code-block">prepopulated_fields = {<span class="string">'slug'</span>: (<span class="string">'title'</span>,)}</div></li>
+
+<li><strong>Добавь readonly_fields для полей только для чтения</strong>
+<div class="code-block">readonly_fields = (<span class="string">'published_date'</span>, <span class="string">'views_count'</span>)</div></li>
+
+<li><strong>Используй fieldsets для группировки полей</strong>
+<div class="code-block">fieldsets = (<br>&nbsp;&nbsp;&nbsp;&nbsp;(<span class="string">'Основное'</span>, {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'fields'</span>: (<span class="string">'title'</span>, <span class="string">'slug'</span>, <span class="string">'content'</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;}),<br>&nbsp;&nbsp;&nbsp;&nbsp;(<span class="string">'Публикация'</span>, {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'fields'</span>: (<span class="string">'is_published'</span>),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'classes'</span>: (<span class="string">'collapse'</span>,)<br>&nbsp;&nbsp;&nbsp;&nbsp;}),<br>&nbsp;&nbsp;&nbsp;&nbsp;(<span class="string">'Статистика'</span>, {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'fields'</span>: (<span class="string">'published_date'</span>, <span class="string">'views_count'</span>),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'classes'</span>: (<span class="string">'collapse'</span>,)<br>&nbsp;&nbsp;&nbsp;&nbsp;}),<br>)</div></li>
+
+<li><strong>Создай кастомное действие make_published</strong>
+<div class="code-block"><span class="keyword">def</span> <span class="function">make_published</span>(modeladmin, request, queryset):<br>&nbsp;&nbsp;&nbsp;&nbsp;queryset.update(is_published=True)<br>make_published.short_description = <span class="string">"Опубликовать выбранные посты"</span></div></li>
+
+<li><strong>Создай действие make_unpublished</strong>
+<div class="code-block"><span class="keyword">def</span> <span class="function">make_unpublished</span>(modeladmin, request, queryset):<br>&nbsp;&nbsp;&nbsp;&nbsp;queryset.update(is_published=False)<br>make_unpublished.short_description = <span class="string">"Снять с публикации"</span></div></li>
+
+<li><strong>Создай действие reset_views для обнуления просмотров</strong>
+<div class="code-block"><span class="keyword">def</span> <span class="function">reset_views</span>(modeladmin, request, queryset):<br>&nbsp;&nbsp;&nbsp;&nbsp;queryset.update(views_count=0)<br>reset_views.short_description = <span class="string">"Обнулить счётчик просмотров"</span></div></li>
+
+<li><strong>Добавь все действия в атрибут actions</strong>
+<div class="code-block">actions = [make_published, make_unpublished, reset_views]</div></li>
+
+<li><strong>Добавь модель Comment для комментариев</strong> (потребуется в следующей практике)
+<div class="code-block"><span class="keyword">class</span> <span class="function">Comment</span>(models.Model):<br>&nbsp;&nbsp;&nbsp;&nbsp;post = models.ForeignKey(Post, on_delete=models.CASCADE)<br>&nbsp;&nbsp;&nbsp;&nbsp;author_name = models.CharField(max_length=100)<br>&nbsp;&nbsp;&nbsp;&nbsp;text = models.TextField()<br>&nbsp;&nbsp;&nbsp;&nbsp;created_at = models.DateTimeField(auto_now_add=True)</div></li>
+
+<li><strong>Создай CommentInline для отображения комментариев на странице поста</strong>
+<div class="code-block"><span class="keyword">class</span> <span class="function">CommentInline</span>(admin.TabularInline):<br>&nbsp;&nbsp;&nbsp;&nbsp;model = Comment<br>&nbsp;&nbsp;&nbsp;&nbsp;extra = 1</div></li>
+
+<li><strong>Добавь inlines в PostAdmin</strong>
+<div class="code-block">inlines = [CommentInline]</div></li>
+
+<li><strong>Проверь работу действий в админке</strong> — выбери несколько постов и примени действие</li>
+
+<li><strong>Добавь цветную индикацию is_published (зелёный/красный)</strong>
+<div class="code-block"><span class="keyword">def</span> <span class="function">colored_status</span>(self, obj):<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> obj.is_published:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> format_html(<span class="string">'&lt;span style="color: green;"&gt;✓ Опубликовано&lt;/span&gt;'</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> format_html(<span class="string">'&lt;span style="color: red;"&gt;✗ Черновик&lt;/span&gt;'</span>)<br>colored_status.short_description = <span class="string">'Статус'</span><br>list_display = (<span class="string">'id'</span>, <span class="string">'title'</span>, <span class="string">'colored_status'</span>)</div></li>
+</ol>
+<div class="achievement">🏆 ДОСТИЖЕНИЕ: "Admin Ninja" — ты превратил админку в профессиональный CRM!</div>`,
+    conclusion: `<h3>✅ Итог практики №4</h3><p>Ты освоил все возможности Django Admin: кастомизацию списка, формы, массовые действия и inline-модели.</p>`
 },
 {
     id: "prac5", num: 5,
     title: "💬 Практика №5. Комментарии, формы и AJAX",
-    infographic: `<div class="infographic"><h3>📝 Жизненный цикл формы</h3><div class="flow-chart"><span class="flow-step">GET</span><span class="flow-arrow">→</span><span class="flow-step">POST</span><span class="flow-arrow">→</span><span class="flow-step">is_valid()</span><span class="flow-arrow">→</span><span class="flow-step">save()</span></div></div>`,
+    infographic: `<div class="infographic"><h3>📝 Жизненный цикл формы</h3><div class="flow-chart"><span class="flow-step">GET</span><span class="flow-arrow">→</span><span class="flow-step">Пустая форма</span><span class="flow-arrow">→</span><span class="flow-step">POST</span><span class="flow-arrow">→</span><span class="flow-step">is_valid()</span><span class="flow-arrow">→</span><span class="flow-step">cleaned_data</span><span class="flow-arrow">→</span><span class="flow-step">save/редирект</span></div></div>`,
     content: `<h2>💬 Практика №5. Комментарии, формы и AJAX</h2>
-<ol><li><strong>Создай модель Comment</strong><div class="code-block">class Comment(models.Model):<br>&nbsp;&nbsp;&nbsp;&nbsp;post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')<br>&nbsp;&nbsp;&nbsp;&nbsp;author_name = models.CharField(max_length=100)<br>&nbsp;&nbsp;&nbsp;&nbsp;text = models.TextField()<br>&nbsp;&nbsp;&nbsp;&nbsp;created_at = models.DateTimeField(auto_now_add=True)</div></li>
-<li><strong>Выполни миграции</strong><div class="code-block">python manage.py makemigrations<br>python manage.py migrate</div></li>
-<li><strong>Создай CommentForm в forms.py</strong><div class="code-block">from django import forms<br>from .models import Comment<br><br>class CommentForm(forms.ModelForm):<br>&nbsp;&nbsp;&nbsp;&nbsp;class Meta:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;model = Comment<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fields = ['author_name', 'text']<br><br>&nbsp;&nbsp;&nbsp;&nbsp;def clean_author_name(self):<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name = self.cleaned_data.get('author_name')<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if any(char.isdigit() for char in name):<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;raise forms.ValidationError("Имя не должно содержать цифры")<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return name<br><br>&nbsp;&nbsp;&nbsp;&nbsp;def clean_text(self):<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text = self.cleaned_data.get('text')<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if 'спам' in text.lower():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;raise forms.ValidationError("Комментарий содержит запрещённые слова")<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return text</div></li>
-<li><strong>Обнови представление post_detail</strong><div class="code-block">def post_detail(request, slug):<br>&nbsp;&nbsp;&nbsp;&nbsp;post = get_object_or_404(Post, slug=slug, is_published=True)<br>&nbsp;&nbsp;&nbsp;&nbsp;comments = post.comments.all()<br>&nbsp;&nbsp;&nbsp;&nbsp;if request.method == 'POST':<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form = CommentForm(request.POST)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if form.is_valid():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;comment = form.save(commit=False)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;comment.post = post<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;comment.save()<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return redirect('post_detail', slug=post.slug)<br>&nbsp;&nbsp;&nbsp;&nbsp;else:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form = CommentForm()<br>&nbsp;&nbsp;&nbsp;&nbsp;return render(request, 'blog/post_detail.html', {'post': post, 'comments': comments, 'form': form})</div></li>
-<li><strong>Добавь в шаблон форму комментария</strong><div class="code-block">&lt;h3&gt;Добавить комментарий&lt;/h3&gt;<br>&lt;form method="post"&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;{% csrf_token %}<br>&nbsp;&nbsp;&nbsp;&nbsp;{{ form.as_p }}<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;button type="submit"&gt;Отправить&lt;/button&gt;<br>&lt;/form&gt;<br>&lt;h3&gt;Комментарии ({{ comments.count }})&lt;/h3&gt;<br>{% for comment in comments %}<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;&lt;strong&gt;{{ comment.author_name }}&lt;/strong&gt; ({{ comment.created_at|date:"d.m.Y H:i" }})&lt;/div&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;{{ comment.text|linebreaks }}&lt;/p&gt;<br>{% empty %}<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Нет комментариев&lt;/p&gt;<br>{% endfor %}</div></li>
-<li><strong>Добавь форму поиска в base.html</strong><div class="code-block">&lt;form action="{% url 'home' %}" method="get"&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type="text" name="q" placeholder="Поиск..." value="{{ request.GET.q }}"&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;button type="submit"&gt;Найти&lt;/button&gt;<br>&lt;/form&gt;</div></li>
-<li><strong>Обнови представление index для поиска</strong><div class="code-block">def index(request):<br>&nbsp;&nbsp;&nbsp;&nbsp;posts = Post.objects.filter(is_published=True)<br>&nbsp;&nbsp;&nbsp;&nbsp;query = request.GET.get('q')<br>&nbsp;&nbsp;&nbsp;&nbsp;if query:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;posts = posts.filter(title__icontains=query) | posts.filter(content__icontains=query)<br>&nbsp;&nbsp;&nbsp;&nbsp;return render(request, 'blog/index.html', {'posts': posts})</div></li>
-<li><strong>Добавь пагинацию</strong><div class="code-block">from django.core.paginator import Paginator<br>paginator = Paginator(posts, 5)<br>page_number = request.GET.get('page')<br>page_obj = paginator.get_page(page_number)</div></li></ol>
-<div class="achievement">🏆 ДОСТИЖЕНИЕ: "Интерактивный блог"</div>`,
-    conclusion: `<h3>✅ Итог практики №5</h3><p>Ты создал систему комментариев с валидацией и поиском.</p>`
+<p><strong>🎯 Цель:</strong> Создать интерактивную систему комментариев с валидацией и отправкой без перезагрузки страницы.</p>
+
+<ol>
+<li><strong>Создай модель Comment в blog/models.py</strong>
+<div class="code-block"><span class="keyword">class</span> <span class="function">Comment</span>(models.Model):<br>&nbsp;&nbsp;&nbsp;&nbsp;post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name=<span class="string">'comments'</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;author_name = models.CharField(max_length=100, verbose_name=<span class="string">'Ваше имя'</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;author_email = models.EmailField(blank=True, null=True)<br>&nbsp;&nbsp;&nbsp;&nbsp;text = models.TextField(verbose_name=<span class="string">'Комментарий'</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;created_at = models.DateTimeField(auto_now_add=True)<br>&nbsp;&nbsp;&nbsp;&nbsp;is_approved = models.BooleanField(default=False)<br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">def</span> <span class="function">__str__</span>(self):<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> f<span class="string">"Comment by {self.author_name} on {self.post}"</span></div></li>
+
+<li><strong>Выполни миграции для новой модели</strong>
+<div class="code-block">python manage.py makemigrations<br>python manage.py migrate</div></li>
+
+<li><strong>Зарегистрируй Comment в admin.py</strong>
+<div class="code-block"><span class="keyword">from</span> .models <span class="keyword">import</span> Comment<br><br><span class="keyword">class</span> <span class="function">CommentAdmin</span>(admin.ModelAdmin):<br>&nbsp;&nbsp;&nbsp;&nbsp;list_display = (<span class="string">'author_name'</span>, <span class="string">'post'</span>, <span class="string">'created_at'</span>, <span class="string">'is_approved'</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;list_filter = (<span class="string">'is_approved'</span>, <span class="string">'created_at'</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;search_fields = (<span class="string">'author_name'</span>, <span class="string">'text'</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;actions = [<span class="string">'approve_comments'</span>]<br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">def</span> <span class="function">approve_comments</span>(self, request, queryset):<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;queryset.update(is_approved=True)<br>&nbsp;&nbsp;&nbsp;&nbsp;approve_comments.short_description = <span class="string">"Одобрить выбранные комментарии"</span><br><br>admin.site.register(Comment, CommentAdmin)</div></li>
+
+<li><strong>Создай файл blog/forms.py</strong>
+<div class="code-block"><span class="keyword">from</span> django <span class="keyword">import</span> forms<br><span class="keyword">from</span> .models <span class="keyword">import</span> Comment<br><br><span class="keyword">class</span> <span class="function">CommentForm</span>(forms.ModelForm):<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">class</span> <span class="function">Meta</span>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;model = Comment<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fields = [<span class="string">'author_name'</span>, <span class="string">'author_email'</span>, <span class="string">'text'</span>]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;widgets = {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'text'</span>: forms.Textarea(attrs={<span class="string">'rows'</span>: 4, <span class="string">'placeholder'</span>: <span class="string">'Ваш комментарий...'</span>}),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">def</span> <span class="function">clean_author_name</span>(self):<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name = self.cleaned_data.get(<span class="string">'author_name'</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> any(char.isdigit() <span class="keyword">for</span> char <span class="keyword">in</span> name):<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">raise</span> forms.ValidationError(<span class="string">"Имя не должно содержать цифры!"</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> name<br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">def</span> <span class="function">clean_text</span>(self):<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text = self.cleaned_data.get(<span class="string">'text'</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> <span class="string">'спам'</span> <span class="keyword">in</span> text.lower():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">raise</span> forms.ValidationError(<span class="string">"Комментарий содержит запрещённые слова!"</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> text</div></li>
+
+<li><strong>Обнови представление post_detail в blog/views.py</strong>
+<div class="code-block"><span class="keyword">from</span> .forms <span class="keyword">import</span> CommentForm<br><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> redirect<br><br><span class="keyword">def</span> <span class="function">post_detail</span>(request, slug):<br>&nbsp;&nbsp;&nbsp;&nbsp;post = get_object_or_404(Post, slug=slug, is_published=True)<br>&nbsp;&nbsp;&nbsp;&nbsp;comments = post.comments.filter(is_approved=True)<br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> request.method == <span class="string">'POST'</span>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form = CommentForm(request.POST)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> form.is_valid():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;comment = form.save(commit=False)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;comment.post = post<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;comment.save()<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> redirect(<span class="string">'post_detail'</span>, slug=post.slug)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form = CommentForm()<br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> render(request, <span class="string">'blog/post_detail.html'</span>, {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'post'</span>: post,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'comments'</span>: comments,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'form'</span>: form<br>&nbsp;&nbsp;&nbsp;&nbsp;})</div></li>
+
+<li><strong>Добавь автоматическое заполнение имени для авторизованных пользователей</strong>
+<div class="code-block"><span class="keyword">if</span> request.user.is_authenticated:<br>&nbsp;&nbsp;&nbsp;&nbsp;initial = {<span class="string">'author_name'</span>: request.user.username}<br>&nbsp;&nbsp;&nbsp;&nbsp;form = CommentForm(initial=initial)</div></li>
+
+<li><strong>Обнови шаблон post_detail.html — добавь форму комментария</strong>
+<div class="code-block">&lt;h3&gt;Добавить комментарий&lt;/h3&gt;<br>&lt;form method="post" id="commentForm"&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;{% csrf_token %}<br>&nbsp;&nbsp;&nbsp;&nbsp;{{ form.as_p }}<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;button type="submit"&gt;Отправить&lt;/button&gt;<br>&lt;/form&gt;</div></li>
+
+<li><strong>Добавь вывод списка комментариев в post_detail.html</strong>
+<div class="code-block">&lt;h3&gt;Комментарии ({{ comments.count }})&lt;/h3&gt;<br>{% for comment in comments %}<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="comment"&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;strong&gt;{{ comment.author_name }}&lt;/strong&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;small&gt;{{ comment.created_at|date:"d.m.Y H:i" }}&lt;/small&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;{{ comment.text|linebreaks }}&lt;/p&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>{% empty %}<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Пока нет комментариев. Будьте первым!&lt;/p&gt;<br>{% endfor %}</div></li>
+
+<li><strong>Добавь стилизацию для комментариев в CSS</strong>
+<div class="code-block">.comment {<br>&nbsp;&nbsp;&nbsp;&nbsp;border-bottom: 1px solid #ddd;<br>&nbsp;&nbsp;&nbsp;&nbsp;padding: 10px 0;<br>}<br>.comment strong { color: #1e6f3f; }</div></li>
+
+<li><strong>Проверь, что комментарии сохраняются в базу данных</strong></li>
+
+<li><strong>Добавь AJAX-отправку комментариев</strong> — создай представление add_comment_ajax
+<div class="code-block"><span class="keyword">from</span> django.http <span class="keyword">import</span> JsonResponse<br><br><span class="keyword">def</span> <span class="function">add_comment_ajax</span>(request, slug):<br>&nbsp;&nbsp;&nbsp;&nbsp;post = get_object_or_404(Post, slug=slug)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> request.method == <span class="string">'POST'</span>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form = CommentForm(request.POST)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> form.is_valid():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;comment = form.save(commit=False)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;comment.post = post<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;comment.save()<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> JsonResponse({<span class="string">'success'</span>: True})<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> JsonResponse({<span class="string">'success'</span>: False, <span class="string">'errors'</span>: form.errors})<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> JsonResponse({<span class="string">'success'</span>: False})</div></li>
+
+<li><strong>Добавь маршрут для AJAX-обработчика в blog/urls.py</strong>
+<div class="code-block">path(<span class="string">'post/&lt;slug:slug&gt;/comment/'</span>, views.add_comment_ajax, name=<span class="string">'add_comment_ajax'</span>),</div></li>
+
+<li><strong>Добавь JavaScript-код для AJAX-отправки</strong>
+<div class="code-block">&lt;script&gt;<br>document.getElementById('commentForm').addEventListener('submit', function(e) {<br>&nbsp;&nbsp;&nbsp;&nbsp;e.preventDefault();<br>&nbsp;&nbsp;&nbsp;&nbsp;const formData = new FormData(this);<br>&nbsp;&nbsp;&nbsp;&nbsp;fetch(window.location.href + 'comment/', {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;method: 'POST',<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;body: formData,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;headers: { 'X-Requested-With': 'XMLHttpRequest' }<br>&nbsp;&nbsp;&nbsp;&nbsp;})<br>&nbsp;&nbsp;&nbsp;&nbsp;.then(response => response.json())<br>&nbsp;&nbsp;&nbsp;&nbsp;.then(data => {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (data.success) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;location.reload();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert('Ошибка: ' + JSON.stringify(data.errors));<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;});<br>});<br>&lt;/script&gt;</div></li>
+
+<li><strong>Создай форму поиска в base.html</strong>
+<div class="code-block">&lt;form action="{% url 'home' %}" method="get"&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type="text" name="q" placeholder="Поиск..." value="{{ request.GET.q }}"&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;button type="submit"&gt;Найти&lt;/button&gt;<br>&lt;/form&gt;</div></li>
+
+<li><strong>Обнови представление index для поиска</strong>
+<div class="code-block"><span class="keyword">def</span> <span class="function">index</span>(request):<br>&nbsp;&nbsp;&nbsp;&nbsp;posts = Post.objects.filter(is_published=True)<br>&nbsp;&nbsp;&nbsp;&nbsp;query = request.GET.get(<span class="string">'q'</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> query:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;posts = posts.filter(title__icontains=query) | posts.filter(content__icontains=query)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> render(request, <span class="string">'blog/index.html'</span>, {<span class="string">'posts'</span>: posts, <span class="string">'query'</span>: query})</div></li>
+
+<li><strong>Добавь сообщение о количестве найденных постов</strong>
+<div class="code-block">{% if query %}<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Найдено постов: {{ posts.count }}&lt;/p&gt;<br>{% endif %}</div></li>
+
+<li><strong>Добавь пагинацию на страницу списка постов</strong>
+<div class="code-block"><span class="keyword">from</span> django.core.paginator <span class="keyword">import</span> Paginator<br><br>paginator = Paginator(posts, 5)<br>page_number = request.GET.get(<span class="string">'page'</span>)<br>page_obj = paginator.get_page(page_number)</div></li>
+
+<li><strong>Добавь в шаблон ссылки на предыдущую и следующую страницу</strong>
+<div class="code-block">{% if page_obj.has_previous %}<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="?page=1"&gt;Первая&lt;/a&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="?page={{ page_obj.previous_page_number }}"&gt;Предыдущая&lt;/a&gt;<br>{% endif %}<br>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}<br>{% if page_obj.has_next %}<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="?page={{ page_obj.next_page_number }}"&gt;Следующая&lt;/a&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="?page={{ page_obj.paginator.num_pages }}"&gt;Последняя&lt;/a&gt;<br>{% endif %}</div></li>
+</ol>
+<div class="achievement">🏆 ДОСТИЖЕНИЕ: "Интерактивный блог" — ты создал полноценную систему комментариев с AJAX и поиском!</div>`,
+    conclusion: `<h3>✅ Итог практики №5</h3><p>Ты создал систему комментариев с валидацией, AJAX-отправкой, поиском, пагинацией и стилизацией.</p>`
 },
 {
     id: "prac6", num: 6,
     title: "🤖 Практика №6. API, Telegram-бот и уведомления",
     infographic: `<div class="infographic"><h3>🤖 REST API + Telegram</h3><div class="flow-chart"><span class="flow-step">DRF</span><span class="flow-arrow">→</span><span class="flow-step">JSON API</span><span class="flow-arrow">→</span><span class="flow-step">Telegram Bot</span></div></div>`,
     content: `<h2>🤖 Практика №6. API, Telegram-бот и уведомления</h2>
-<ol><li><strong>Установи DRF</strong><div class="code-block">pip install djangorestframework</div></li>
-<li><strong>Добавь 'rest_framework' в INSTALLED_APPS</strong></li>
-<li><strong>Создай serializers.py</strong><div class="code-block">from rest_framework import serializers<br>from .models import Post<br><br>class PostSerializer(serializers.ModelSerializer):<br>&nbsp;&nbsp;&nbsp;&nbsp;class Meta:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;model = Post<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fields = ['id', 'title', 'slug', 'content', 'published_date']</div></li>
-<li><strong>Создай api/views.py</strong><div class="code-block">from rest_framework import viewsets<br>from .models import Post<br>from .serializers import PostSerializer<br><br>class PostViewSet(viewsets.ModelViewSet):<br>&nbsp;&nbsp;&nbsp;&nbsp;queryset = Post.objects.filter(is_published=True)<br>&nbsp;&nbsp;&nbsp;&nbsp;serializer_class = PostSerializer</div></li>
-<li><strong>Создай api/urls.py</strong><div class="code-block">from rest_framework.routers import DefaultRouter<br>from .views import PostViewSet<br><br>router = DefaultRouter()<br>router.register(r'posts', PostViewSet)<br>urlpatterns = router.urls</div></li>
-<li><strong>Подключи API в корневом urls.py</strong><div class="code-block">path('api/', include('blog.api.urls')),</div></li>
-<li><strong>Проверь API</strong> http://127.0.0.1:8000/api/posts/</li>
-<li><strong>Установи python-telegram-bot</strong><div class="code-block">pip install python-telegram-bot</div></li>
-<li><strong>Создай бота через @BotFather, получи токен</strong></li>
-<li><strong>Создай bot.py</strong><div class="code-block">import requests<br>from telegram.ext import Updater, CommandHandler<br><br>API_URL = 'http://127.0.0.1:8000/api/'<br>TOKEN = 'YOUR_TOKEN'<br><br>def start(update, context):<br>&nbsp;&nbsp;&nbsp;&nbsp;update.message.reply_text('Привет! Используй /posts')<br><br>def get_posts(update, context):<br>&nbsp;&nbsp;&nbsp;&nbsp;response = requests.get(f'{API_URL}posts/')<br>&nbsp;&nbsp;&nbsp;&nbsp;if response.status_code == 200:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;posts = response.json()<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;message = '\\n'.join([f"{p['id']}. {p['title']}" for p in posts[:5]])<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;update.message.reply_text(f'Последние посты:\\n{message}')<br><br>updater = Updater(TOKEN)<br>updater.dispatcher.add_handler(CommandHandler('start', start))<br>updater.dispatcher.add_handler(CommandHandler('posts', get_posts))<br>updater.start_polling()<br>updater.idle()</div></li>
-<li><strong>Запусти бота</strong><div class="code-block">python blog/bot.py</div></li>
-<li><strong>Создай сигнал для уведомлений в signals.py</strong><div class="code-block">from django.db.models.signals import post_save<br>from django.dispatch import receiver<br>from .models import Post<br>import requests<br><br>@receiver(post_save, sender=Post)<br>def notify_new_post(sender, instance, created, **kwargs):<br>&nbsp;&nbsp;&nbsp;&nbsp;if created:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;requests.post(f'https://api.telegram.org/bot{TOKEN}/sendMessage', json={'chat_id': CHAT_ID, 'text': f'Новый пост: {instance.title}'})</div></li>
-<li><strong>Подключи сигналы в apps.py</strong><div class="code-block">def ready(self):<br>&nbsp;&nbsp;&nbsp;&nbsp;import blog.signals</div></li></ol>
-<div class="achievement">🏆 ДОСТИЖЕНИЕ: "Bot Master"</div>`,
-    conclusion: `<h3>✅ Итог практики №6</h3><p>Ты создал REST API и Telegram-бота.</p>`
+<p><strong>🎯 Цель:</strong> Создать REST API для блога, написать Telegram-бота и настроить уведомления о новых постах.</p>
+
+<ol>
+<li><strong>Установи Django REST Framework</strong>
+<div class="code-block">pip install djangorestframework</div></li>
+
+<li><strong>Добавь 'rest_framework' в INSTALLED_APPS</strong>
+<div class="code-block">INSTALLED_APPS = [<br>&nbsp;&nbsp;&nbsp;&nbsp;...<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'rest_framework'</span>,<br>]</div></li>
+
+<li><strong>Создай файл blog/serializers.py</strong>
+<div class="code-block"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> serializers<br><span class="keyword">from</span> .models <span class="keyword">import</span> Post, Comment<br><br><span class="keyword">class</span> <span class="function">PostSerializer</span>(serializers.ModelSerializer):<br>&nbsp;&nbsp;&nbsp;&nbsp;comments_count = serializers.IntegerField(read_only=True)<br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">class</span> <span class="function">Meta</span>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;model = Post<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fields = [<span class="string">'id'</span>, <span class="string">'title'</span>, <span class="string">'slug'</span>, <span class="string">'content'</span>, <span class="string">'published_date'</span>, <span class="string">'views_count'</span>, <span class="string">'comments_count'</span>]<br><br><span class="keyword">class</span> <span class="function">CommentSerializer</span>(serializers.ModelSerializer):<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">class</span> <span class="function">Meta</span>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;model = Comment<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fields = [<span class="string">'id'</span>, <span class="string">'author_name'</span>, <span class="string">'text'</span>, <span class="string">'created_at'</span>]</div></li>
+
+<li><strong>Создай blog/api/views.py с ViewSet для Post</strong>
+<div class="code-block"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> viewsets, permissions, filters<br><span class="keyword">from</span> django_filters.rest_framework <span class="keyword">import</span> DjangoFilterBackend<br><span class="keyword">from</span> .models <span class="keyword">import</span> Post<br><span class="keyword">from</span> .serializers <span class="keyword">import</span> PostSerializer<br><br><span class="keyword">class</span> <span class="function">PostViewSet</span>(viewsets.ModelViewSet):<br>&nbsp;&nbsp;&nbsp;&nbsp;queryset = Post.objects.filter(is_published=True)<br>&nbsp;&nbsp;&nbsp;&nbsp;serializer_class = PostSerializer<br>&nbsp;&nbsp;&nbsp;&nbsp;permission_classes = [permissions.IsAuthenticatedOrReadOnly]<br>&nbsp;&nbsp;&nbsp;&nbsp;filter_backends = [filters.SearchFilter, DjangoFilterBackend]<br>&nbsp;&nbsp;&nbsp;&nbsp;search_fields = [<span class="string">'title'</span>, <span class="string">'content'</span>]<br>&nbsp;&nbsp;&nbsp;&nbsp;filterset_fields = [<span class="string">'is_published'</span>]</div></li>
+
+<li><strong>Создай blog/api/urls.py</strong>
+<div class="code-block"><span class="keyword">from</span> rest_framework.routers <span class="keyword">import</span> DefaultRouter<br><span class="keyword">from</span> .views <span class="keyword">import</span> PostViewSet<br><br>router = DefaultRouter()<br>router.register(<span class="string">r'posts'</span>, PostViewSet)<br>urlpatterns = router.urls</div></li>
+
+<li><strong>Подключи API маршруты в корневом urls.py</strong>
+<div class="code-block">path(<span class="string">'api/'</span>, include(<span class="string">'blog.api.urls'</span>)),</div></li>
+
+<li><strong>Проверь API через браузер</strong>
+<div class="code-block">http://127.0.0.1:8000/api/posts/<br>http://127.0.0.1:8000/api/posts/1/</div></li>
+
+<li><strong>Добавь пагинацию в DRF</strong>
+<div class="code-block">REST_FRAMEWORK = {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'DEFAULT_PAGINATION_CLASS'</span>: <span class="string">'rest_framework.pagination.PageNumberPagination'</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'PAGE_SIZE'</span>: 10,<br>}</div></li>
+
+<li><strong>Добавь фильтрацию по is_published</strong>
+<div class="code-block">http://127.0.0.1:8000/api/posts/?is_published=true</div></li>
+
+<li><strong>Добавь поиск по заголовку</strong>
+<div class="code-block">http://127.0.0.1:8000/api/posts/?search=первый</div></li>
+
+<li><strong>Установи python-telegram-bot</strong>
+<div class="code-block">pip install python-telegram-bot</div></li>
+
+<li><strong>Создай бота через @BotFather в Telegram, получи токен</strong></li>
+
+<li><strong>Создай файл blog/bot.py</strong>
+<div class="code-block"><span class="keyword">import</span> requests<br><span class="keyword">from</span> telegram <span class="keyword">import</span> Update, Bot<br><span class="keyword">from</span> telegram.ext <span class="keyword">import</span> Updater, CommandHandler, CallbackContext<br><br>API_URL = <span class="string">'http://127.0.0.1:8000/api/'</span><br>TOKEN = <span class="string">'YOUR_BOT_TOKEN'</span><br><br><span class="keyword">def</span> <span class="function">start</span>(update: Update, context: CallbackContext):<br>&nbsp;&nbsp;&nbsp;&nbsp;update.message.reply_text(<span class="string">'Привет! Я бот для блога. Используй /posts для списка постов.'</span>)<br><br><span class="keyword">def</span> <span class="function">get_posts</span>(update: Update, context: CallbackContext):<br>&nbsp;&nbsp;&nbsp;&nbsp;response = requests.get(f<span class="string">'{API_URL}posts/'</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> response.status_code == 200:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;posts = response.json()<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;message = <span class="string">'\\n'</span>.join([f<span class="string">"{p['id']}. {p['title']}"</span> <span class="keyword">for</span> p <span class="keyword">in</span> posts[:5]])<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;update.message.reply_text(f<span class="string">'Последние посты:\\n{message}'</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;update.message.reply_text(<span class="string">'Ошибка получения постов'</span>)<br><br><span class="keyword">def</span> <span class="function">main</span>():<br>&nbsp;&nbsp;&nbsp;&nbsp;updater = Updater(TOKEN)<br>&nbsp;&nbsp;&nbsp;&nbsp;dp = updater.dispatcher<br>&nbsp;&nbsp;&nbsp;&nbsp;dp.add_handler(CommandHandler(<span class="string">'start'</span>, start))<br>&nbsp;&nbsp;&nbsp;&nbsp;dp.add_handler(CommandHandler(<span class="string">'posts'</span>, get_posts))<br>&nbsp;&nbsp;&nbsp;&nbsp;updater.start_polling()<br>&nbsp;&nbsp;&nbsp;&nbsp;updater.idle()<br><br><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:<br>&nbsp;&nbsp;&nbsp;&nbsp;main()</div></li>
+
+<li><strong>Запусти бота в отдельном терминале</strong>
+<div class="code-block">python blog/bot.py</div></li>
+
+<li><strong>Проверь команды бота в Telegram: /start, /posts</strong></li>
+
+<li><strong>Добавь команду /post &lt;id&gt; для получения одного поста</strong>
+<div class="code-block"><span class="keyword">def</span> <span class="function">get_post</span>(update: Update, context: CallbackContext):<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> <span class="keyword">not</span> context.args:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;update.message.reply_text(<span class="string">'Укажите ID поста: /post 1'</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><br>&nbsp;&nbsp;&nbsp;&nbsp;post_id = context.args[0]<br>&nbsp;&nbsp;&nbsp;&nbsp;response = requests.get(f<span class="string">'{API_URL}posts/{post_id}/'</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> response.status_code == 200:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;post = response.json()<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;message = f<span class="string">"{post['title']}\\n{post['content'][:200]}..."</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;update.message.reply_text(message)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;update.message.reply_text(<span class="string">'Пост не найден'</span>)</div></li>
+
+<li><strong>Создай сигнал для уведомлений о новых постах в blog/signals.py</strong>
+<div class="code-block"><span class="keyword">from</span> django.db.models.signals <span class="keyword">import</span> post_save<br><span class="keyword">from</span> django.dispatch <span class="keyword">import</span> receiver<br><span class="keyword">from</span> .models <span class="keyword">import</span> Post<br><span class="keyword">import</span> requests<br><br>TELEGRAM_CHAT_ID = <span class="string">'YOUR_CHAT_ID'</span><br>TELEGRAM_TOKEN = <span class="string">'YOUR_BOT_TOKEN'</span><br><br>@receiver(post_save, sender=Post)<br><span class="keyword">def</span> <span class="function">notify_new_post</span>(sender, instance, created, **kwargs):<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> created:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;message = f<span class="string">"🆕 Новый пост!\\n{instance.title}\\nЧитать: /post_{instance.id}"</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url = f<span class="string">"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;requests.post(url, json={<span class="string">'chat_id'</span>: TELEGRAM_CHAT_ID, <span class="string">'text'</span>: message})</div></li>
+
+<li><strong>Подключи сигналы в blog/apps.py</strong>
+<div class="code-block"><span class="keyword">def</span> <span class="function">ready</span>(self):<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">import</span> blog.signals</div></li>
+
+<li><strong>Создай асинхронную задачу для отправки уведомлений (через Celery)</strong>
+<div class="code-block"><span class="comment"># blog/tasks.py</span><br><span class="keyword">from</span> celery <span class="keyword">import</span> shared_task<br><span class="keyword">import</span> requests<br><br>@shared_task<br><span class="keyword">def</span> <span class="function">send_telegram_notification</span>(title, post_id):<br>&nbsp;&nbsp;&nbsp;&nbsp;message = f<span class="string">"🆕 Новый пост!\\n{title}\\nID: {post_id}"</span><br>&nbsp;&nbsp;&nbsp;&nbsp;url = f<span class="string">"https://api.telegram.org/bot{TOKEN}/sendMessage"</span><br>&nbsp;&nbsp;&nbsp;&nbsp;requests.post(url, json={<span class="string">'chat_id'</span>: CHAT_ID, <span class="string">'text'</span>: message})</div></li>
+
+<li><strong>Добавь команду /subscribe для подписки на уведомления</strong>
+<div class="code-block"><span class="comment"># Храни chat_id в базе данных</span><br><span class="keyword">class</span> Subscriber(models.Model):<br>&nbsp;&nbsp;&nbsp;&nbsp;chat_id = models.CharField(max_length=100, unique=True)<br>&nbsp;&nbsp;&nbsp;&nbsp;created_at = models.DateTimeField(auto_now_add=True)</div></li>
+
+<li><strong>Создай бота, который постит случайный пост каждый день (Celery Beat)</strong>
+<div class="code-block">@periodic_task(run_every=timedelta(days=1))<br><span class="keyword">def</span> <span class="function">send_daily_post</span>():<br>&nbsp;&nbsp;&nbsp;&nbsp;post = Post.objects.order_by(<span class="string">'?'</span>).first()<br>&nbsp;&nbsp;&nbsp;&nbsp;send_telegram_notification.delay(post.title, post.id)</div></li>
+
+<li><strong>Добавь поддержку Markdown в сообщениях бота</strong>
+<div class="code-block">parse_mode=<span class="string">'Markdown'</span></div></li>
+
+<li><strong>Добавь inline-клавиатуру с кнопками для навигации</strong>
+<div class="code-block"><span class="keyword">from</span> telegram <span class="keyword">import</span> InlineKeyboardButton, InlineKeyboardMarkup<br>keyboard = [[InlineKeyboardButton(<span class="string">"Читать далее"</span>, url=f<span class="string">"http://example.com/post/{post.id}"</span>)]]<br>reply_markup = InlineKeyboardMarkup(keyboard)</div></li>
+
+<li><strong>Добавь команду /latest для получения самого нового поста</strong>
+<div class="code-block"><span class="keyword">def</span> <span class="function">latest_post</span>(update: Update, context: CallbackContext):<br>&nbsp;&nbsp;&nbsp;&nbsp;post = Post.objects.filter(is_published=True).latest(<span class="string">'published_date'</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;update.message.reply_text(f<span class="string">"{post.title}\\n{post.content[:300]}"</span>)</div></li>
+
+<li><strong>Создай веб-хук для бота вместо polling (для продакшена)</strong>
+<div class="code-block">updater.start_webhook(listen=<span class="string">'0.0.0.0'</span>, port=8443, url_path=TOKEN)<br>updater.bot.set_webhook(<span class="string">'https://yourdomain.com/'</span> + TOKEN)</div></li>
+
+<li><strong>Добавь команду /help с описанием всех команд</strong></li>
+
+<li><strong>Проверь, что при создании поста через админку приходит уведомление в Telegram</strong></li>
+</ol>
+<div class="achievement">🏆 ДОСТИЖЕНИЕ: "Bot Master" — ты создал Telegram-бота, который общается с Django через API!</div>`,
+    conclusion: `<h3>✅ Итог практики №6</h3><p>Ты создал REST API, Telegram-бота и настроил уведомления. Теперь твой блог интегрирован с мессенджером!</p>`
 },
 {
     id: "prac7", num: 7,
     title: "🐳 Практика №7. Docker, CI/CD и деплой",
-    infographic: `<div class="infographic"><h3>🐳 Docker + CI/CD</h3><div class="flow-chart"><span class="flow-step">Dockerfile</span><span class="flow-arrow">→</span><span class="flow-step">docker-compose</span><span class="flow-arrow">→</span><span class="flow-step">GitHub Actions</span></div></div>`,
+    infographic: `<div class="infographic"><h3>🐳 Docker + CI/CD</h3><div class="flow-chart"><span class="flow-step">Dockerfile</span><span class="flow-arrow">→</span><span class="flow-step">docker-compose</span><span class="flow-arrow">→</span><span class="flow-step">GitHub Actions</span><span class="flow-arrow">→</span><span class="flow-step">Деплой</span></div></div>`,
     content: `<h2>🐳 Практика №7. Docker, CI/CD и деплой</h2>
-<ol><li><strong>Создай Dockerfile</strong><div class="code-block">FROM python:3.10-slim<br>WORKDIR /app<br>COPY requirements.txt .<br>RUN pip install -r requirements.txt<br>COPY . .<br>CMD ["gunicorn", "mynews.wsgi:application", "--bind", "0.0.0.0:8000"]</div></li>
-<li><strong>Создай .dockerignore</strong><div class="code-block">venv/<br>__pycache__/<br>.git/<br>.env<br>db.sqlite3</div></li>
-<li><strong>Собери образ</strong><div class="code-block">docker build -t myblog .</div></li>
-<li><strong>Запусти контейнер</strong><div class="code-block">docker run -p 8000:8000 myblog</div></li>
-<li><strong>Создай docker-compose.yml</strong><div class="code-block">version: '3.8'<br>services:<br>&nbsp;&nbsp;db:<br>&nbsp;&nbsp;&nbsp;&nbsp;image: postgres:15<br>&nbsp;&nbsp;&nbsp;&nbsp;environment:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- POSTGRES_DB=mydb<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- POSTGRES_USER=user<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- POSTGRES_PASSWORD=pass<br>&nbsp;&nbsp;web:<br>&nbsp;&nbsp;&nbsp;&nbsp;build: .<br>&nbsp;&nbsp;&nbsp;&nbsp;ports:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- "8000:8000"<br>&nbsp;&nbsp;&nbsp;&nbsp;depends_on:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- db</div></li>
-<li><strong>Запусти docker-compose</strong><div class="code-block">docker-compose up --build</div></li>
-<li><strong>Создай репозиторий на GitHub и запушь код</strong></li>
-<li><strong>Создай .github/workflows/deploy.yml</strong><div class="code-block">name: Deploy<br>on: [push]<br>jobs:<br>&nbsp;&nbsp;deploy:<br>&nbsp;&nbsp;&nbsp;&nbsp;runs-on: ubuntu-latest<br>&nbsp;&nbsp;&nbsp;&nbsp;steps:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- uses: actions/checkout@v3<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Build Docker image<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run: docker build -t myblog .</div></li>
-<li><strong>Добавь секреты в GitHub</strong></li>
-<li><strong>Арендуй VPS и установи Docker</strong></li>
-<li><strong>Настрой деплой на сервер через SSH</strong></li></ol>
-<div class="achievement">🏆 ДОСТИЖЕНИЕ: "DevOps Hero"</div>`,
-    conclusion: `<h3>✅ Итог практики №7</h3><p>Ты контейнеризировал проект и настроил CI/CD.</p>`
+<p><strong>🎯 Цель:</strong> Контейнеризировать проект и настроить автоматический деплой при пуше в GitHub.</p>
+
+<ol>
+<li><strong>Установи Docker и Docker Compose</strong>
+<div class="code-block"><span class="comment"># Для Windows/Mac: скачай Docker Desktop с официального сайта</span><br><span class="comment"># Для Linux:</span><br>sudo apt install docker.io docker-compose</div></li>
+
+<li><strong>Создай файл Dockerfile в корне проекта</strong>
+<div class="code-block">FROM python:3.10-slim<br><br>ENV PYTHONDONTWRITEBYTECODE 1<br>ENV PYTHONUNBUFFERED 1<br><br>WORKDIR /app<br><br>COPY requirements.txt .<br>RUN pip install --no-cache-dir -r requirements.txt<br><br>COPY . .<br><br>RUN python manage.py collectstatic --noinput<br><br>CMD [<span class="string">"gunicorn"</span>, <span class="string">"mynews.wsgi:application"</span>, <span class="string">"--bind"</span>, <span class="string">"0.0.0.0:8000"</span>]</div></li>
+
+<li><strong>Создай файл .dockerignore</strong>
+<div class="code-block">venv/<br>__pycache__/<br>*.pyc<br>.git/<br>.env<br>db.sqlite3</div></li>
+
+<li><strong>Собери Docker-образ</strong>
+<div class="code-block">docker build -t myblog .</div></li>
+
+<li><strong>Запусти контейнер</strong>
+<div class="code-block">docker run -p 8000:8000 myblog</div></li>
+
+<li><strong>Проверь, что сайт работает через Docker</strong> — открой http://localhost:8000</li>
+
+<li><strong>Создай docker-compose.yml</strong>
+<div class="code-block">version: <span class="string">'3.8'</span><br><br>services:<br>&nbsp;&nbsp;db:<br>&nbsp;&nbsp;&nbsp;&nbsp;image: postgres:15<br>&nbsp;&nbsp;&nbsp;&nbsp;volumes:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- postgres_data:/var/lib/postgresql/data/<br>&nbsp;&nbsp;&nbsp;&nbsp;environment:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- POSTGRES_DB=mydb<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- POSTGRES_USER=user<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- POSTGRES_PASSWORD=pass<br>&nbsp;&nbsp;&nbsp;&nbsp;restart: always<br><br>&nbsp;&nbsp;web:<br>&nbsp;&nbsp;&nbsp;&nbsp;build: .<br>&nbsp;&nbsp;&nbsp;&nbsp;command: gunicorn mynews.wsgi:application --bind 0.0.0.0:8000<br>&nbsp;&nbsp;&nbsp;&nbsp;volumes:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- .:/app<br>&nbsp;&nbsp;&nbsp;&nbsp;ports:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="string">"8000:8000"</span><br>&nbsp;&nbsp;&nbsp;&nbsp;depends_on:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- db<br>&nbsp;&nbsp;&nbsp;&nbsp;environment:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- DATABASE_URL=postgresql://user:pass@db:5432/mydb<br>&nbsp;&nbsp;&nbsp;&nbsp;restart: always<br><br>volumes:<br>&nbsp;&nbsp;postgres_data:</div></li>
+
+<li><strong>Запусти проект через docker-compose</strong>
+<div class="code-block">docker-compose up --build</div></li>
+
+<li><strong>Проверь, что PostgreSQL и Django работают вместе</strong></li>
+
+<li><strong>Добавь сервис Redis в docker-compose.yml</strong>
+<div class="code-block">redis:<br>&nbsp;&nbsp;image: redis:7<br>&nbsp;&nbsp;ports:<br>&nbsp;&nbsp;&nbsp;&nbsp;- <span class="string">"6379:6379"</span><br>&nbsp;&nbsp;restart: always</div></li>
+
+<li><strong>Добавь сервис Celery worker</strong>
+<div class="code-block">celery:<br>&nbsp;&nbsp;build: .<br>&nbsp;&nbsp;command: celery -A mynews worker -l info<br>&nbsp;&nbsp;depends_on:<br>&nbsp;&nbsp;&nbsp;&nbsp;- redis<br>&nbsp;&nbsp;&nbsp;&nbsp;- db<br>&nbsp;&nbsp;environment:<br>&nbsp;&nbsp;&nbsp;&nbsp;- DATABASE_URL=postgresql://user:pass@db:5432/mydb<br>&nbsp;&nbsp;restart: always</div></li>
+
+<li><strong>Добавь Celery Beat для периодических задач</strong>
+<div class="code-block">celery-beat:<br>&nbsp;&nbsp;build: .<br>&nbsp;&nbsp;command: celery -A mynews beat -l info<br>&nbsp;&nbsp;depends_on:<br>&nbsp;&nbsp;&nbsp;&nbsp;- redis<br>&nbsp;&nbsp;&nbsp;&nbsp;- db<br>&nbsp;&nbsp;restart: always</div></li>
+
+<li><strong>Создай репозиторий на GitHub и запушь код</strong>
+<div class="code-block">git init<br>git add .<br>git commit -m <span class="string">"Initial commit with Docker"</span><br>git remote add origin https://github.com/yourusername/myblog.git<br>git push -u origin main</div></li>
+
+<li><strong>Создай папку .github/workflows/</strong>
+<div class="code-block">mkdir -p .github/workflows</div></li>
+
+<li><strong>Создай файл .github/workflows/deploy.yml</strong>
+<div class="code-block">name: Deploy Django<br><br>on:<br>&nbsp;&nbsp;push:<br>&nbsp;&nbsp;&nbsp;&nbsp;branches: [ main ]<br><br>jobs:<br>&nbsp;&nbsp;test:<br>&nbsp;&nbsp;&nbsp;&nbsp;runs-on: ubuntu-latest<br>&nbsp;&nbsp;&nbsp;&nbsp;steps:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- uses: actions/checkout@v3<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Set up Python<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uses: actions/setup-python@v4<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;python-version: <span class="string">'3.10'</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Install dependencies<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run: |<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pip install -r requirements.txt<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Run tests<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run: python manage.py test<br><br>&nbsp;&nbsp;build-and-push:<br>&nbsp;&nbsp;&nbsp;&nbsp;needs: test<br>&nbsp;&nbsp;&nbsp;&nbsp;runs-on: ubuntu-latest<br>&nbsp;&nbsp;&nbsp;&nbsp;steps:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- uses: actions/checkout@v3<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Login to Docker Hub<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uses: docker/login-action@v2<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;username: \${{ secrets.DOCKER_USERNAME }}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;password: \${{ secrets.DOCKER_PASSWORD }}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Build and push<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uses: docker/build-push-action@v4<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;push: true<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tags: myuser/myblog:latest<br><br>&nbsp;&nbsp;deploy:<br>&nbsp;&nbsp;&nbsp;&nbsp;needs: build-and-push<br>&nbsp;&nbsp;&nbsp;&nbsp;runs-on: ubuntu-latest<br>&nbsp;&nbsp;&nbsp;&nbsp;steps:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Deploy to server<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uses: appleboy/ssh-action@v0.1.5<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;host: \${{ secrets.SERVER_HOST }}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;username: \${{ secrets.SERVER_USER }}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key: \${{ secrets.SSH_PRIVATE_KEY }}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;script: |<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd /app<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker-compose down<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker pull myuser/myblog:latest<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker-compose up -d</div></li>
+
+<li><strong>Добавь секреты в настройках GitHub</strong>:
+DOCKER_USERNAME, DOCKER_PASSWORD, SERVER_HOST, SERVER_USER, SSH_PRIVATE_KEY</li>
+
+<li><strong>Добавь шаг с миграциями БД в CI/CD</strong>
+<div class="code-block">docker-compose exec web python manage.py migrate</div></li>
+
+<li><strong>Добавь стадию линтинга (flake8, black)</strong>
+<div class="code-block">- name: Lint with flake8<br>&nbsp;&nbsp;run: |<br>&nbsp;&nbsp;&nbsp;&nbsp;pip install flake8 black<br>&nbsp;&nbsp;&nbsp;&nbsp;flake8 . --max-line-length=120<br>&nbsp;&nbsp;&nbsp;&nbsp;black . --check</div></li>
+
+<li><strong>Настрой уведомления о успешном/неуспешном деплое в Telegram</strong>
+<div class="code-block">- name: Send Telegram notification<br>&nbsp;&nbsp;uses: appleboy/telegram-action@master<br>&nbsp;&nbsp;with:<br>&nbsp;&nbsp;&nbsp;&nbsp;to: \${{ secrets.TELEGRAM_TO }}<br>&nbsp;&nbsp;&nbsp;&nbsp;token: \${{ secrets.TELEGRAM_TOKEN }}<br>&nbsp;&nbsp;&nbsp;&nbsp;message: Deployment successful!</div></li>
+
+<li><strong>Арендуй VPS (DigitalOcean, Hetzner, Timeweb) или используй бесплатный Railway.app</strong></li>
+
+<li><strong>Установи Docker и docker-compose на сервере</strong>
+<div class="code-block">sudo apt update<br>sudo apt install docker.io docker-compose</div></li>
+
+<li><strong>Скопируй .env файл и docker-compose.prod.yml на сервер</strong>
+<div class="code-block">scp docker-compose.prod.yml user@server:/app/<br>scp .env user@server:/app/</div></li>
+
+<li><strong>На сервере создай папку /app и запусти контейнеры</strong>
+<div class="code-block">docker-compose -f docker-compose.prod.yml up -d</div></li>
+
+<li><strong>Настрой HTTPS через Let's Encrypt и Nginx</strong>
+<div class="code-block">sudo apt install nginx certbot python3-certbot-nginx<br>sudo certbot --nginx -d yourdomain.com</div></li>
+
+<li><strong>Настрой мониторинг через uptime-kuma или Healthchecks.io</strong></li>
+
+<li><strong>Настрой автоматический бэкап базы данных раз в день через cron</strong>
+<div class="code-block">0 2 * * * docker exec postgres_container pg_dump -U user mydb > /backups/db_\$(date +%Y%m%d).sql</div></li>
+
+<li><strong>Проверь, что после пуша в GitHub автоматически запускается пайплайн и сайт доступен по домену</strong></li>
+</ol>
+<div class="achievement">🏆 ДОСТИЖЕНИЕ: "DevOps Hero" — ты настроил полный CI/CD пайплайн и задеплоил приложение!</div>`,
+    conclusion: `<h3>✅ Итог практики №7</h3><p>Ты контейнеризировал проект, настроил CI/CD пайплайн в GitHub Actions и задеплоил приложение на сервер.</p>`
 },
 {
     id: "prac8", num: 8,
     title: "⚡ Практика №8. Celery, Redis и асинхронность",
-    infographic: `<div class="infographic"><h3>⚡ Асинхронная обработка</h3><div class="flow-chart"><span class="flow-step">📨 Запрос</span><span class="flow-arrow">→</span><span class="flow-step">Celery</span><span class="flow-arrow">→</span><span class="flow-step">Redis</span><span class="flow-arrow">→</span><span class="flow-step">Worker</span></div></div>`,
+    infographic: `<div class="infographic"><h3>⚡ Асинхронная обработка</h3><div class="flow-chart"><span class="flow-step">📨 Запрос</span><span class="flow-arrow">→</span><span class="flow-step">Celery</span><span class="flow-arrow">→</span><span class="flow-step">Redis</span><span class="flow-arrow">→</span><span class="flow-step">Worker</span><span class="flow-arrow">→</span><span class="flow-step">📧 Email</span></div></div>`,
     content: `<h2>⚡ Практика №8. Celery, Redis и асинхронность</h2>
-<ol><li><strong>Установи Celery и Redis</strong><div class="code-block">pip install celery redis</div></li>
-<li><strong>Создай celery.py в папке проекта</strong><div class="code-block">import os<br>from celery import Celery<br><br>os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mynews.settings')<br>app = Celery('mynews')<br>app.config_from_object('django.conf:settings', namespace='CELERY')<br>app.autodiscover_tasks()</div></li>
-<li><strong>В __init__.py добавь</strong><div class="code-block">from .celery import app as celery_app</div></li>
-<li><strong>Добавь настройки в settings.py</strong><div class="code-block">CELERY_BROKER_URL = 'redis://localhost:6379'<br>CELERY_RESULT_BACKEND = 'redis://localhost:6379'</div></li>
-<li><strong>Запусти Redis через Docker</strong><div class="code-block">docker run -d -p 6379:6379 redis</div></li>
-<li><strong>Создай tasks.py</strong><div class="code-block">from celery import shared_task<br>from django.core.mail import send_mail<br><br>@shared_task<br>def send_welcome_email(user_email):<br>&nbsp;&nbsp;&nbsp;&nbsp;send_mail('Добро пожаловать!', 'Спасибо за регистрацию', 'noreply@example.com', [user_email])<br>&nbsp;&nbsp;&nbsp;&nbsp;return f"Email sent to {user_email}"</div></li>
-<li><strong>Запусти Celery worker</strong><div class="code-block">celery -A mynews worker -l info</div></li>
-<li><strong>Вызови задачу асинхронно</strong><div class="code-block">send_welcome_email.delay('user@example.com')</div></li>
-<li><strong>Установи Flower для мониторинга</strong><div class="code-block">pip install flower<br>celery -A mynews flower --port=5555</div></li>
-<li><strong>Настрой периодическую задачу в celery.py</strong><div class="code-block">app.conf.beat_schedule = {<br>&nbsp;&nbsp;&nbsp;&nbsp;'send-daily-digest': {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'task': 'blog.tasks.send_daily_digest',<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'schedule': crontab(hour=9, minute=0),<br>&nbsp;&nbsp;&nbsp;&nbsp;},<br>}</div></li>
-<li><strong>Запусти Celery beat</strong><div class="code-block">celery -A mynews beat -l info</div></li>
-<li><strong>Установи Django Channels</strong><div class="code-block">pip install channels channels-redis</div></li>
+<p><strong>🎯 Цель:</strong> Настроить асинхронную обработку задач (Celery + Redis) и веб-сокеты для real-time чата.</p>
+
+<ol>
+<li><strong>Установи Celery, Redis и django-celery-results</strong>
+<div class="code-block">pip install celery redis django-celery-results</div></li>
+
+<li><strong>Добавь 'django_celery_results' в INSTALLED_APPS</strong>
+<div class="code-block">INSTALLED_APPS += [<span class="string">'django_celery_results'</span>]</div></li>
+
+<li><strong>Выполни миграции для django_celery_results</strong>
+<div class="code-block">python manage.py migrate django_celery_results</div></li>
+
+<li><strong>Создай файл mynews/celery.py</strong>
+<div class="code-block"><span class="keyword">import</span> os<br><span class="keyword">from</span> celery <span class="keyword">import</span> Celery<br><br>os.environ.setdefault(<span class="string">'DJANGO_SETTINGS_MODULE'</span>, <span class="string">'mynews.settings'</span>)<br><br>app = Celery(<span class="string">'mynews'</span>)<br>app.config_from_object(<span class="string">'django.conf:settings'</span>, namespace=<span class="string">'CELERY'</span>)<br>app.autodiscover_tasks()<br><br>@app.task(bind=True)<br><span class="keyword">def</span> <span class="function">debug_task</span>(self):<br>&nbsp;&nbsp;&nbsp;&nbsp;print(f<span class="string">'Request: {self.request!r}'</span>)</div></li>
+
+<li><strong>В mynews/__init__.py добавь импорт Celery</strong>
+<div class="code-block"><span class="keyword">from</span> .celery <span class="keyword">import</span> app <span class="keyword">as</span> celery_app<br><br>__all__ = (<span class="string">'celery_app'</span>,)</div></li>
+
+<li><strong>Добавь настройки Celery в settings.py</strong>
+<div class="code-block">CELERY_BROKER_URL = <span class="string">'redis://localhost:6379'</span><br>CELERY_RESULT_BACKEND = <span class="string">'redis://localhost:6379'</span><br>CELERY_ACCEPT_CONTENT = [<span class="string">'application/json'</span>]<br>CELERY_TASK_SERIALIZER = <span class="string">'json'</span><br>CELERY_RESULT_SERIALIZER = <span class="string">'json'</span><br>CELERY_TIMEZONE = <span class="string">'Europe/Moscow'</span><br>CELERY_RESULT_EXTENDED = True</div></li>
+
+<li><strong>Запусти Redis через Docker</strong>
+<div class="code-block">docker run -d -p 6379:6379 --name redis redis:7</div></li>
+
+<li><strong>Создай файл blog/tasks.py</strong>
+<div class="code-block"><span class="keyword">from</span> celery <span class="keyword">import</span> shared_task<br><span class="keyword">from</span> django.core.mail <span class="keyword">import</span> send_mail<br><span class="keyword">from</span> .models <span class="keyword">import</span> Post<br><br>@shared_task<br><span class="keyword">def</span> <span class="function">send_welcome_email</span>(user_email, username):<br>&nbsp;&nbsp;&nbsp;&nbsp;send_mail(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Добро пожаловать!'</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f<span class="string">'Привет, {username}! Спасибо за регистрацию.'</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'noreply@example.com'</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[user_email],<br>&nbsp;&nbsp;&nbsp;&nbsp;)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> f<span class="string">"Welcome email sent to {user_email}"</span><br><br>@shared_task<br><span class="keyword">def</span> <span class="function">send_new_post_notification</span>(post_id):<br>&nbsp;&nbsp;&nbsp;&nbsp;post = Post.objects.get(id=post_id)<br>&nbsp;&nbsp;&nbsp;&nbsp;subscribers = ['admin@example.com', 'moderator@example.com']<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span> email <span class="keyword">in</span> subscribers:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;send_mail(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Новый пост!'</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f<span class="string">'Опубликован новый пост: {post.title}'</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'noreply@example.com'</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[email],<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> f<span class="string">"Notifications sent for post {post_id}"</span><br><br>@shared_task<br><span class="keyword">def</span> <span class="function">resize_image_task</span>(image_path, max_width=1200):<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">from</span> PIL <span class="keyword">import</span> Image<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">import</span> os<br>&nbsp;&nbsp;&nbsp;&nbsp;img = Image.open(image_path)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> img.width > max_width:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ratio = max_width / img.width<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new_height = int(img.height * ratio)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;img = img.resize((max_width, new_height), Image.LANCZOS)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;img.save(image_path)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> f<span class="string">"Image resized: {image_path}"</span></div></li>
+
+<li><strong>Запусти Celery worker</strong>
+<div class="code-block">celery -A mynews worker -l info</div></li>
+
+<li><strong>Запусти Celery beat для периодических задач</strong>
+<div class="code-block">celery -A mynews beat -l info</div></li>
+
+<li><strong>Вызови задачу асинхронно в представлении</strong>
+<div class="code-block"><span class="keyword">from</span> .tasks <span class="keyword">import</span> send_welcome_email<br><br>send_welcome_email.delay(user.email, user.username)</div></li>
+
+<li><strong>Создай периодическую задачу в celery.py</strong>
+<div class="code-block">app.conf.beat_schedule = {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'send-daily-post-digest'</span>: {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'task'</span>: <span class="string">'blog.tasks.send_daily_digest'</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'schedule'</span>: crontab(hour=9, minute=0),<br>&nbsp;&nbsp;&nbsp;&nbsp;},<br>}</div></li>
+
+<li><strong>Создай задачу для отправки дайджеста</strong>
+<div class="code-block">@shared_task<br><span class="keyword">def</span> <span class="function">send_daily_digest</span>():<br>&nbsp;&nbsp;&nbsp;&nbsp;yesterday = timezone.now() - timedelta(days=1)<br>&nbsp;&nbsp;&nbsp;&nbsp;posts = Post.objects.filter(published_date__gte=yesterday)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> posts:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;send_mail(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Дайджест новых постов'</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'\\n'</span>.join([f<span class="string">"- {p.title}"</span> <span class="keyword">for</span> p <span class="keyword">in</span> posts]),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'noreply@example.com'</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="string">'subscriber@example.com'</span>],<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</div></li>
+
+<li><strong>Установи Flower для мониторинга задач</strong>
+<div class="code-block">pip install flower<br>celery -A mynews flower --port=5555</div></li>
+
+<li><strong>Открой Flower в браузере</strong> — http://localhost:5555</li>
+
+<li><strong>Создай задачу для ресайза изображений при загрузке</strong>
+<div class="code-block"><span class="keyword">from</span> .tasks <span class="keyword">import</span> resize_image_task<br><br><span class="keyword">class</span> Post(models.Model):<br>&nbsp;&nbsp;&nbsp;&nbsp;image = models.ImageField(upload_to=<span class="string">'posts/'</span>, blank=True)<br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">def</span> <span class="function">save</span>(self, *args, **kwargs):<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super().save(*args, **kwargs)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> self.image:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resize_image_task.delay(self.image.path)</div></li>
+
+<li><strong>Добавь задачу для генерации PDF-отчёта</strong>
+<div class="code-block">@shared_task<br><span class="keyword">def</span> <span class="function">generate_pdf_report</span>(post_id):<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">from</span> reportlab.pdfgen <span class="keyword">import</span> canvas<br>&nbsp;&nbsp;&nbsp;&nbsp;post = Post.objects.get(id=post_id)<br>&nbsp;&nbsp;&nbsp;&nbsp;c = canvas.Canvas(f<span class="string">"reports/post_{post_id}.pdf"</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;c.drawString(100, 750, post.title)<br>&nbsp;&nbsp;&nbsp;&nbsp;c.drawString(100, 700, post.content[:500])<br>&nbsp;&nbsp;&nbsp;&nbsp;c.save()<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> f<span class="string">"PDF generated for post {post_id}"</span></div></li>
+
+<li><strong>Создай задачу для парсинга RSS-лент</strong>
+<div class="code-block">@shared_task<br><span class="keyword">def</span> <span class="function">parse_rss_feed</span>(feed_url):<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">import</span> feedparser<br>&nbsp;&nbsp;&nbsp;&nbsp;feed = feedparser.parse(feed_url)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span> entry <span class="keyword">in</span> feed.entries[:5]:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Post.objects.get_or_create(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title=entry.title,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;defaults={<span class="string">'content'</span>: entry.summary, <span class="string">'slug'</span>: entry.link.split(<span class="string">'/'</span>)[-1]}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</div></li>
+
+<li><strong>Добавь задачу для очистки старых сессий</strong>
+<div class="code-block">@shared_task<br><span class="keyword">def</span> <span class="function">cleanup_sessions</span>():<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">from</span> django.contrib.sessions.models <span class="keyword">import</span> Session<br>&nbsp;&nbsp;&nbsp;&nbsp;Session.objects.filter(expire_date__lt=timezone.now()).delete()</div></li>
+
+<li><strong>Установи Django Channels для WebSockets</strong>
+<div class="code-block">pip install channels channels-redis</div></li>
+
 <li><strong>Добавь 'channels' в INSTALLED_APPS</strong></li>
-<li><strong>Создай consumer для WebSocket</strong><div class="code-block">class ChatConsumer(AsyncWebsocketConsumer):<br>&nbsp;&nbsp;&nbsp;&nbsp;async def connect(self):<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.room_name = self.scope['url_route']['kwargs']['room_name']<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.room_group_name = f'chat_{self.room_name}'<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;await self.channel_layer.group_add(self.room_group_name, self.channel_name)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;await self.accept()</div></li>
-<li><strong>Настрой routing.py и asgi.py</strong></li>
-<li><strong>Напиши JavaScript-клиент для WebSocket</strong><div class="code-block">const socket = new WebSocket('ws://localhost:8000/ws/chat/lobby/');</div></li></ol>
-<div class="achievement">🏆 ДОСТИЖЕНИЕ: "Async Master"</div>`,
-    conclusion: `<h3>✅ Итог практики №8</h3><p>Ты настроил Celery, Redis и WebSockets.</p>`
+
+<li><strong>Создай файл mynews/asgi.py с настройками Channels</strong>
+<div class="code-block"><span class="keyword">import</span> os<br><span class="keyword">from</span> django.core.asgi <span class="keyword">import</span> get_asgi_application<br><span class="keyword">from</span> channels.routing <span class="keyword">import</span> ProtocolTypeRouter, URLRouter<br><span class="keyword">from</span> channels.auth <span class="keyword">import</span> AuthMiddlewareStack<br><span class="keyword">import</span> chat.routing<br><br>os.environ.setdefault(<span class="string">'DJANGO_SETTINGS_MODULE'</span>, <span class="string">'mynews.settings'</span>)<br><br>application = ProtocolTypeRouter({<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'http'</span>: get_asgi_application(),<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'websocket'</span>: AuthMiddlewareStack(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;URLRouter(chat.routing.websocket_urlpatterns)<br>&nbsp;&nbsp;&nbsp;&nbsp;),<br>})</div></li>
+
+<li><strong>Создай файл chat/consumers.py для WebSocket-обработчиков</strong>
+<div class="code-block"><span class="keyword">from</span> channels.generic.websocket <span class="keyword">import</span> AsyncWebsocketConsumer<br><span class="keyword">import</span> json<br><br><span class="keyword">class</span> <span class="function">ChatConsumer</span>(AsyncWebsocketConsumer):<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">async</span> <span class="keyword">def</span> <span class="function">connect</span>(self):<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.room_name = self.scope[<span class="string">'url_route'</span>][<span class="string">'kwargs'</span>][<span class="string">'room_name'</span>]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.room_group_name = f<span class="string">'chat_{self.room_name}'</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">await</span> self.channel_layer.group_add(self.room_group_name, self.channel_name)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">await</span> self.accept()<br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">async</span> <span class="keyword">def</span> <span class="function">receive</span>(self, text_data):<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data = json.loads(text_data)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">await</span> self.channel_layer.group_send(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.room_group_name,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<span class="string">'type'</span>: <span class="string">'chat_message'</span>, <span class="string">'message'</span>: data[<span class="string">'message'</span>]}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">async</span> <span class="keyword">def</span> <span class="function">chat_message</span>(self, event):<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">await</span> self.send(text_data=json.dumps({<span class="string">'message'</span>: event[<span class="string">'message'</span>]}))</div></li>
+
+<li><strong>Создай файл routing.py для маршрутизации WebSocket</strong>
+<div class="code-block"><span class="keyword">from</span> django.urls <span class="keyword">import</span> path<br><span class="keyword">from</span> . <span class="keyword">import</span> consumers<br><br>websocket_urlpatterns = [<br>&nbsp;&nbsp;&nbsp;&nbsp;path(<span class="string">'ws/chat/&lt;str:room_name&gt;/'</span>, consumers.ChatConsumer.as_asgi()),<br>]</div></li>
+
+<li><strong>Напиши JavaScript-клиент для WebSocket</strong>
+<div class="code-block">const socket = new WebSocket('ws://localhost:8000/ws/chat/lobby/');<br>socket.onmessage = function(e) {<br>&nbsp;&nbsp;&nbsp;&nbsp;const data = JSON.parse(e.data);<br>&nbsp;&nbsp;&nbsp;&nbsp;addMessageToChat(data.message);<br>};<br>socket.onopen = function() {<br>&nbsp;&nbsp;&nbsp;&nbsp;console.log('WebSocket connected');<br>};</div></li>
+
+<li><strong>Проверь, что сообщения в чате отправляются в реальном времени</strong></li>
+</ol>
+<div class="achievement">🏆 ДОСТИЖЕНИЕ: "Async Master" — ты освоил асинхронную обработку и real-time коммуникации!</div>`,
+    conclusion: `<h3>✅ Итог практики №8</h3><p>Ты настроил Celery для фоновых задач, Redis для брокера, Flower для мониторинга и WebSockets для real-time чата.</p>`
 }
 ];
 // ===================== ЗМЕЙКА =====================
